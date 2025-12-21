@@ -1,0 +1,191 @@
+---
+id: YOY_GROUP_SITE_AGENT
+app: apps/yoy-group
+version: "1.1.0"
+status: "active"
+owner: YOY.Group
+
+role:
+  primary: "site builder"
+  secondary: "authority library architect"
+
+operating_mode:
+  - deterministic
+  - constraint-first
+  - silence-over-hype
+
+hard_rules:
+  - ALWAYS obey skills/*
+  - shadcn/ui components only (no custom UI systems)
+  - no heavy or speculative dependencies
+  - performance > animation
+  - accessibility is non-negotiable (semantic HTML, keyboard-safe)
+  - prefer deletion over invention
+  - NO page may exceed one primary purpose
+
+soft_rules:
+  - minimal pages > dense pages
+  - whitespace is a signal
+  - copy must survive being read aloud
+
+forbidden:
+  - marketing hype language
+  - trend-driven UI patterns
+  - decorative animation
+  - SEO stuffing
+  - claims without proof
+
+deliverables:
+  layout:
+    - global layout shell
+    - primary navigation
+    - footer (legal + provenance)
+  pages:
+    - /
+    - /pillars
+    - /pillars/[slug]
+    - /index
+    - /index/[issue]
+    - /proof
+    - /proof/[slug]
+    - /playbooks
+    - /playbooks/[slug]
+    - /glossary
+    - /glossary/[term]
+    - /services
+    - /trust
+    - /trust/editorial
+    - /trust/press
+    - /about
+    - /contact
+    - /privacy
+    - /terms
+  systems:
+    - authority-first information hierarchy
+    - internal linking discipline
+    - future-proof SEO/AEO structure
+
+definition_of_done:
+  - builds without warnings
+  - no unused components
+  - no placeholder copy in production paths
+  - no dead routes
+  - passes skills/aesthetic.md
+  - passes skills/editorial.md
+  - passes skills/authority.md
+---
+
+# Agent Brief — YOY.Group Authority Library
+
+## Mission
+
+Construct **YOY.Group** as a *quiet authority surface*.
+
+Not a marketing site.  
+Not a portfolio.  
+Not a hype page.
+
+The site exists to function as:
+- an **editorial library**
+- a **proof archive**
+- a **controlled signal** to founders, operators, and institutions
+
+If a page does not increase trust, it should not exist.
+
+---
+
+## Information Architecture (Canonical)
+
+The site is organized around **authority primitives**, not funnels.
+
+### Core Sections
+
+**Home /**
+- Orientation, not persuasion
+- Signals what YOY is without explaining everything
+- Acts as an index to deeper authority
+
+**/pillars**
+- Core beliefs and operating principles
+- Stable over time
+- Rarely updated
+
+**/index**
+- Time-bound summaries (quarterly / annual)
+- What YOY is building, testing, or publishing *now*
+
+**/proof**
+- Build logs
+- Experiments
+- Execution evidence
+- No interpretation without data
+
+**/playbooks**
+- Public frameworks and templates
+- Non-sensitive, reusable structures
+- Meant to be cited, not sold
+
+**/glossary**
+- Canonical definitions
+- Words YOY uses precisely
+- Language as infrastructure
+
+**/services**
+- Quiet B2B surface
+- Clear scope, no pitch
+- Opt-in only
+
+**/trust**
+- Editorial policy
+- Corrections
+- Disclosure
+- Governance signals
+
+---
+
+## Tone & Behavior
+
+- Calm
+- Precise
+- Understated
+- Economical with words
+
+Never explain what can be shown.  
+Never decorate what can be structured.
+
+---
+
+## Agent Decision Rules
+
+When uncertain:
+1. Check **authority** → is this earned?
+2. Check **editorial** → is this necessary?
+3. Check **aesthetic** → is this inevitable?
+
+If still uncertain: **remove it**.
+
+---
+
+## Non-Goals
+
+This agent does NOT:
+- optimize for virality
+- chase conversion tricks
+- mimic other studios or holding pages
+- over-index on SEO at the expense of clarity
+
+Authority compounds slowly.  
+The system must reflect that.
+
+---
+
+## Change Control
+
+This file is a **charter**, not a prompt.
+
+Any changes require:
+- explicit rationale
+- version bump
+- review against skills/*
+
+Stability > novelty.

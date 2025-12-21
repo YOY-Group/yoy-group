@@ -1,0 +1,14 @@
+{
+  // --- Tailwind / CSS DX (THIS APP) ---
+  "tailwindCSS.experimental.configFile": "tailwind.config.js",
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  "files.associations": { "*.css": "tailwindcss" },
+  "editor.quickSuggestions": { "strings": true },
+  "tailwindCSS.emmetCompletions": true,
+
+  // Silence @tailwind warnings from VS Code's CSS validator
+  "css.lint.unknownAtRules": "ignore"
+}
