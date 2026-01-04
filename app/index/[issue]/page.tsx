@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 type IssueStatus = "Planned" | "In Progress" | "Baseline" | "Published";
 
 type Issue = {
@@ -62,10 +65,6 @@ function getIssue(slug: string) {
 type PageProps = {
   params: Promise<{ issue: string }>;
 };
-
-export function generateStaticParams() {
-  return ISSUES.map((i) => ({ issue: i.slug }));
-}
 
 export async function generateMetadata({
   params,
