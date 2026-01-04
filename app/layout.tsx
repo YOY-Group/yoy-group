@@ -17,7 +17,39 @@ export const metadata: Metadata = {
     template: "%s — YOY.Group",
   },
   description:
-    "Autonomous, culture-led consumer systems. We design retail operating models where brand, software, and distribution move as one.",
+    "Agent-led, culture-native operating systems for commerce. We design retail architectures where brand, software, and distribution move as one.",
+  metadataBase: new URL("https://yoy.group"),
+
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any", type: "image/x-icon" },
+      { url: "/brand/y-glyph/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/brand/y-glyph/favicon-16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [
+      {
+        url: "/brand/y-glyph/apple-touch-icon.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+  },
+
+  openGraph: {
+    type: "website",
+    siteName: "YOY.Group",
+    title: "YOY.Group",
+    description:
+      "Agent-led, culture-native operating systems for commerce.",
+    url: "https://yoy.group",
+  },
+
+  twitter: {
+    card: "summary",
+    title: "YOY.Group",
+    description:
+      "Agent-led, culture-native operating systems for commerce.",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
