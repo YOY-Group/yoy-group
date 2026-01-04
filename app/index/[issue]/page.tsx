@@ -61,19 +61,16 @@ function getIssue(slug: string) {
   return ISSUES.find((i) => i.slug === slug);
 }
 
-// Next 16 can treat dynamic route params as async in some setups.
 type PageProps = {
   params: Promise<{ issue: string }>;
 };
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolved = await params;
   const issue = getIssue(resolved.issue);
-  if (!issue) return { title: "Index Issue · YOY.Group" };
+  if (!issue) return { title: "Index · YOY.Group" };
 
-  const title = `${issue.title} · YOY.Group`;
+  const title = `${issue.title} · Index · YOY.Group`;
   const description =
     issue.summary.length > 160 ? `${issue.summary.slice(0, 157)}…` : issue.summary;
 

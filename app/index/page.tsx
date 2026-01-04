@@ -1,10 +1,12 @@
 // app/index/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
-export const metadata = {
-  title: "Index",
+
+export const metadata: Metadata = {
+  title: "Index · YOY.Group",
   description:
     "Time-bound issues (quarterly / annual) documenting what YOY.Group ships, proves, and updates.",
 };
