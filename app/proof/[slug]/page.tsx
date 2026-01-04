@@ -4,8 +4,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 /**
- * This is a stubbed content loader.
- * Later this can be replaced by:
+ * Stubbed content loader.
+ * Later replace with:
  * - MD/MDX
  * - Supabase
  * - Git-backed content
@@ -58,42 +58,43 @@ const PROOF_MAP: Record<string, ProofEntry> = {
   },
 };
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  const entry = PROOF_MAP[params.slug];
-  if (!entry) return {};
+export const dynamic = "force-static";
+
+export function generateStaticParams() {
+  return Object.keys(PROOF_MAP).map((slug) => ({ slug }));
+}
+
+type PageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const entry = PROOF_MAP[slug];
+  if (!entry) return { title: "Proof · YOY.Group" };
 
   return {
     title: entry.title,
     description: entry.summary,
+    openGraph: { title: entry.title, description: entry.summary, type: "article" },
+    twitter: { card: "summary", title: entry.title, description: entry.summary },
   };
 }
 
-export default function ProofEntryPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const entry = PROOF_MAP[params.slug];
+export default async function ProofEntryPage({ params }: PageProps) {
+  const { slug } = await params;
+  const entry = PROOF_MAP[slug];
 
-  if (!entry) {
-    notFound();
-  }
+  if (!entry) return notFound();
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-24">
-      {/* Header */}
       <header className="space-y-4">
         <p className="text-xs uppercase tracking-widest text-muted-foreground">
           Proof · {entry.tag}
         </p>
 
-        <h1 className="text-3xl font-semibold tracking-tight">
-          {entry.title}
-        </h1>
+        <h1 className="text-3xl font-semibold tracking-tight">{entry.title}</h1>
 
         <p className="text-sm text-muted-foreground">{entry.date}</p>
 
@@ -104,13 +105,9 @@ export default function ProofEntryPage({
 
       <div className="my-12 h-px bg-border" />
 
-      {/* Body */}
       <section className="space-y-4">
         {entry.body.map((line, i) => (
-          <p
-            key={i}
-            className="text-sm leading-relaxed text-foreground"
-          >
+          <p key={i} className="text-sm leading-relaxed text-foreground">
             {line}
           </p>
         ))}
@@ -118,12 +115,10 @@ export default function ProofEntryPage({
 
       <div className="my-16 h-px bg-border" />
 
-      {/* Footer */}
       <footer className="flex items-center justify-between text-xs text-muted-foreground">
         <Link href="/proof" className="hover:text-foreground">
           ← Back to Proof
         </Link>
-
         <span>Immutable log · v0.1</span>
       </footer>
     </main>

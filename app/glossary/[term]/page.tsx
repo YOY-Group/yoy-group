@@ -1,4 +1,5 @@
 // app/glossary/[term]/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -9,7 +10,7 @@ type Term = {
   definition: string;
   notes?: string[];
   related?: { title: string; href: string }[];
-  updated?: string; // ISO or readable
+  updated?: string;
 };
 
 const TERMS: Term[] = [
@@ -55,16 +56,37 @@ function getTerm(slug: string) {
   return TERMS.find((t) => t.slug === slug);
 }
 
+export const dynamic = "force-static";
+
 export function generateStaticParams() {
   return TERMS.map((t) => ({ term: t.slug }));
 }
 
-export default function GlossaryTermPage({
-  params,
-}: {
-  params: { term: string };
-}) {
-  const term = getTerm(params.term);
+type PageProps = {
+  params: Promise<{ term: string }>;
+};
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { term: slug } = await params;
+  const term = getTerm(slug);
+
+  if (!term) return { title: "Glossary · YOY.Group" };
+
+  const title = `${term.title} · Glossary`;
+  const description =
+    term.short.length > 160 ? `${term.short.slice(0, 157)}…` : term.short;
+
+  return {
+    title,
+    description,
+    openGraph: { title, description, type: "article" },
+    twitter: { card: "summary", title, description },
+  };
+}
+
+export default async function GlossaryTermPage({ params }: PageProps) {
+  const { term: slug } = await params;
+  const term = getTerm(slug);
   if (!term) return notFound();
 
   return (
