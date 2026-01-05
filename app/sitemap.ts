@@ -1,59 +1,68 @@
 // app/sitemap.ts
 import type { MetadataRoute } from "next";
 
-// Keep this as your single source of truth.
-// When you deploy to yoy.group, set it to "https://yoy.group".
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+/**
+ * ─────────────────────────────────────────────────────────────
+ * Canonical site URL
+ * ─────────────────────────────────────────────────────────────
+ * In production, NEXT_PUBLIC_SITE_URL should be set to:
+ * https://yoy.group
+ */
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  "https://yoy-group.vercel.app";
 
-// ---- Route sources (keep these in sync with each section) ----
-// If you later move these arrays into a shared module, great.
-// For now: explicit = reliable.
+/**
+ * ─────────────────────────────────────────────────────────────
+ * Route sources (single source of truth)
+ * Keep these in sync with actual content.
+ * ─────────────────────────────────────────────────────────────
+ */
+const LOG_ISSUES = ["2026-q1", "2025-q4"] as const;
 
-const INDEX_ISSUES = ["2026-q1", "2025-q4"] as const;
-
-// If you already have slugs/terms in code for these pages, mirror them here.
-// Otherwise keep them empty and we’ll wire in once content stabilises.
 const PROOF_SLUGS: string[] = [];
 const PLAYBOOK_SLUGS: string[] = [];
 const GLOSSARY_TERMS: string[] = [];
 
+/**
+ * Build absolute URLs safely
+ */
 function u(path: string) {
-  // Ensure no double slashes
   return `${SITE_URL.replace(/\/$/, "")}${path.startsWith("/") ? "" : "/"}${path}`;
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  // Core authority routes
   const routes: MetadataRoute.Sitemap = [
+    // ── Core authority routes ────────────────────────────────
     { url: u("/"), lastModified: now, changeFrequency: "weekly", priority: 1.0 },
 
     { url: u("/pillars"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: u("/index"), lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: u("/log"), lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: u("/proof"), lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: u("/playbooks"), lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: u("/glossary"), lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: u("/services"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: u("/trust"), lastModified: now, changeFrequency: "monthly", priority: 0.6 },
 
-    // Secondary / legal
+    // ── Secondary / legal ────────────────────────────────────
     { url: u("/about"), lastModified: now, changeFrequency: "yearly", priority: 0.4 },
     { url: u("/contact"), lastModified: now, changeFrequency: "yearly", priority: 0.4 },
     { url: u("/privacy"), lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  // Index issues
-  for (const issue of INDEX_ISSUES) {
+  // ── Log issues (time-bound records) ────────────────────────
+  for (const issue of LOG_ISSUES) {
     routes.push({
-      url: u(`/index/${issue}`),
+      url: u(`/log/${issue}`),
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.7,
     });
   }
 
-  // Proof detail pages
+  // ── Proof detail pages ─────────────────────────────────────
   for (const slug of PROOF_SLUGS) {
     routes.push({
       url: u(`/proof/${slug}`),
@@ -63,7 +72,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  // Playbooks detail pages
+  // ── Playbook detail pages ──────────────────────────────────
   for (const slug of PLAYBOOK_SLUGS) {
     routes.push({
       url: u(`/playbooks/${slug}`),
@@ -73,7 +82,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  // Glossary terms
+  // ── Glossary terms ─────────────────────────────────────────
   for (const term of GLOSSARY_TERMS) {
     routes.push({
       url: u(`/glossary/${term}`),

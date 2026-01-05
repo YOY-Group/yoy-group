@@ -1,10 +1,13 @@
 // components/nav/PrimaryNav.tsx
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 
 const NAV = [
   { href: "/pillars", label: "Pillars" },
-  { href: "/index", label: "Index" },
+  { href: "/log", label: "Log" },
   { href: "/proof", label: "Proof" },
   { href: "/glossary", label: "Glossary" },
   { href: "/services", label: "Services" },
@@ -12,6 +15,8 @@ const NAV = [
 ] as const;
 
 export default function PrimaryNav() {
+  const pathname = usePathname();
+
   return (
     <header className="mb-12">
       <div className="flex items-center justify-between gap-6">
@@ -27,16 +32,27 @@ export default function PrimaryNav() {
         {/* Primary navigation */}
         <nav aria-label="Primary">
           <ul className="flex flex-wrap items-center justify-end gap-x-6 gap-y-2">
-            {NAV.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {NAV.map((item) => {
+              const isActive =
+                pathname === item.href ||
+                pathname.startsWith(`${item.href}/`);
+
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={[
+                      "text-sm transition-colors",
+                      isActive
+                        ? "text-foreground font-medium"
+                        : "text-muted-foreground hover:text-foreground",
+                    ].join(" ")}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       </div>
