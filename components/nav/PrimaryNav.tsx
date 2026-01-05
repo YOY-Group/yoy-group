@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 
 const NAV = [
   { href: "/pillars", label: "Pillars" },
-  { href: "/index", label: "Index" },
+  { href: "/index/", label: "Index" },
   { href: "/proof", label: "Proof" },
   { href: "/glossary", label: "Glossary" },
   { href: "/services", label: "Services" },
