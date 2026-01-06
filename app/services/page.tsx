@@ -25,9 +25,9 @@ const LENSES: Lens[] = [
   {
     title: "Retail",
     href: "/services/retail",
-    desc: "Operating models and execution cadence for brands that need clarity, speed, and control without enterprise overhead.",
+    desc: "Operating models and execution cadence for brands that need clarity, speed, and control—without enterprise overhead.",
     outcomes: [
-      "Cleaner weekly trading rhythm and accountability",
+      "A weekly trading rhythm with real accountability",
       "Fewer operational leaks (stock, data, handoffs)",
       "A roadmap that ships, with risk gates",
     ],
@@ -45,11 +45,11 @@ const LENSES: Lens[] = [
   {
     title: "Creators",
     href: "/services/creators",
-    desc: "Turn calendar, content, and audience into a repeatable merch system — drops, access, and retention tied to real moments.",
+    desc: "Turn calendar, content, and audience into a repeatable merch system—drops, access, and retention tied to real moments.",
     outcomes: [
-      "Merch cadence aligned to events/releases",
-      "Better retention: owned channel + light CRM",
-      "Cleaner fulfillment and fewer manual ops",
+      "Merch cadence aligned to events and releases",
+      "Better retention via owned channel + light CRM",
+      "Cleaner fulfillment with fewer manual ops",
     ],
     forWho: [
       "Artists / DJs / creators",
@@ -65,15 +65,15 @@ const LENSES: Lens[] = [
   {
     title: "Rails",
     href: "/services/rails",
-    desc: "Web2-first, Web3-ready rails for commerce and community — identity, access, provenance, and automation on Telegram-friendly infrastructure.",
+    desc: "Web2-first, Web3-ready rails for commerce and community—identity, access, provenance, and automation on Telegram-friendly infrastructure.",
     outcomes: [
-      "Bridge from existing stack into rails safely",
+      "A safe bridge from existing stack into rails",
       "Clear constraints: permissions, audit, failure modes",
       "Partner-ready architecture for pilots and rollouts",
     ],
     forWho: [
       "Platforms and ecosystems (TON/Telegram-adjacent)",
-      "Brands exploring loyalty/provenance/access",
+      "Brands exploring loyalty, provenance, and access",
       "Teams needing deterministic automation with guardrails",
     ],
     notFor: [
@@ -145,9 +145,9 @@ export const metadata = {
 
 export default function ServicesPage() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-24">
+    <main className="py-16 md:py-24">
       {/* Header */}
-      <header className="space-y-4">
+      <header className="mx-auto max-w-3xl space-y-4">
         <p className="text-xs uppercase tracking-widest text-muted-foreground">
           Services
         </p>
@@ -163,10 +163,56 @@ export default function ServicesPage() {
         </p>
       </header>
 
-      <div className="my-12 h-px bg-border" />
+      <div className="mx-auto my-12 h-px max-w-3xl bg-border" />
 
+      {/* How this fits together */}
+      <section className="mx-auto max-w-3xl space-y-6" aria-label="How this fits together">
+        <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+          How this fits together
+        </h2>
+
+        <dl className="space-y-5 text-sm leading-relaxed">
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-[92px_1fr] md:gap-6">
+            <dt className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Retail
+            </dt>
+            < dd className="text-muted-foreground">
+              <span className="font-medium text-foreground">Decision layer:</span>{" "}
+              who owns what, what gets reviewed weekly, and how commercial reality stays visible.
+            </dd>
+          </div>
+
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-[92px_1fr] md:gap-6">
+            <dt className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Rails
+            </dt>
+            <dd className="text-muted-foreground">
+              <span className="font-medium text-foreground">Execution layer:</span>{" "}
+              events, messaging, access, and proof so the system behaves predictably under load.
+            </dd>
+          </div>
+
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-[92px_1fr] md:gap-6">
+            <dt className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Creators
+            </dt>
+            <dd className="text-muted-foreground">
+              <span className="font-medium text-foreground">Culture-led revenue:</span>{" "}
+              calendar-driven releases and relationship capture so output compounds without chaos.
+            </dd>
+          </div>
+        </dl>
+
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          Most teams start with the layer that is currently breaking their week. Each service works
+          standalone, and connects cleanly if you later need the full stack.
+        </p>
+      </section>
+
+      <div className="mx-auto my-12 h-px max-w-3xl bg-border" />
+      
       {/* Lenses */}
-      <section className="space-y-6" aria-label="Service lenses">
+      <section className="mx-auto max-w-5xl space-y-6" aria-label="Service lenses">
         <div className="flex items-baseline justify-between">
           <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Lenses
@@ -184,13 +230,13 @@ export default function ServicesPage() {
             <li key={s.href} className="group">
               <Link
                 href={s.href}
-                className="block space-y-4 rounded-lg border border-border/60 p-5 hover:border-border transition-colors"
+                className="block h-full space-y-4 rounded-lg border border-border/60 p-5 transition-colors hover:border-border"
               >
                 <div className="flex items-baseline justify-between gap-3">
                   <h3 className="text-sm font-medium tracking-tight">
                     {s.title}
                   </h3>
-                  <span className="text-xs text-muted-foreground group-hover:text-foreground/80 transition-colors">
+                  <span className="text-xs text-muted-foreground transition-colors group-hover:text-foreground/80">
                     View →
                   </span>
                 </div>
@@ -239,10 +285,10 @@ export default function ServicesPage() {
         </ul>
       </section>
 
-      <div className="my-16 h-px bg-border" />
+      <div className="mx-auto my-16 h-px max-w-3xl bg-border" />
 
       {/* Modules */}
-      <section className="space-y-6" aria-label="Delivery modules">
+      <section className="mx-auto max-w-3xl space-y-6" aria-label="Delivery modules">
         <h2 className="text-sm font-medium tracking-tight">Modules</h2>
         <p className="text-sm leading-relaxed text-muted-foreground">
           Engagements are assembled from a small set of modules. This keeps the
@@ -261,10 +307,10 @@ export default function ServicesPage() {
         </ul>
       </section>
 
-      <div className="my-16 h-px bg-border" />
+      <div className="mx-auto my-16 h-px max-w-3xl bg-border" />
 
       {/* Modes */}
-      <section className="space-y-6" aria-label="Engagement modes">
+      <section className="mx-auto max-w-3xl space-y-6" aria-label="Engagement modes">
         <h2 className="text-sm font-medium tracking-tight">Engagement modes</h2>
         <p className="text-sm leading-relaxed text-muted-foreground">
           Three ways to start. All are timeboxed. All end in something real.
@@ -289,10 +335,10 @@ export default function ServicesPage() {
         </ul>
       </section>
 
-      <div className="my-16 h-px bg-border" />
+      <div className="mx-auto my-16 h-px max-w-3xl bg-border" />
 
       {/* Intake */}
-      <section className="space-y-4" aria-label="Intake">
+      <section className="mx-auto max-w-3xl space-y-4" aria-label="Intake">
         <h2 className="text-sm font-medium tracking-tight">Intake</h2>
         <p className="text-sm leading-relaxed text-muted-foreground">
           If you want to explore fit, send a short note: current stack, primary
@@ -314,11 +360,11 @@ export default function ServicesPage() {
             Trust & disclosures →
           </Link>
         </div>
-      </section>
 
-      <footer className="mt-16 text-xs text-muted-foreground">
-        Proof over promises. Timeboxed by default.
-      </footer>
+        <p className="pt-8 text-xs text-muted-foreground">
+          Proof over promises. Timeboxed by default.
+        </p>
+      </section>
     </main>
   );
 }

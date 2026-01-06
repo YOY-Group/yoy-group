@@ -1,0 +1,25 @@
+YOY.Group — Retail systems + AI operating models for culture-led brands.
+
+We help:
+- Consumer brands (fashion, lifestyle, media) that want faster execution with less waste.
+- Operators building modern commerce stacks (Shopify + automations + data).
+- Teams turning brand, software, and distribution into one system.
+
+Start here (canonical):
+- Pillars: /pillars
+- Services overview: /services
+- Retail service: /services/retail
+- Rails service: /services/rails
+- Creators service: /services/creators
+- Proof (evidence): /proof
+- Log (time-bound updates): /log
+- Playbooks: /playbooks
+- Glossary: /glossary
+
+Principles:
+- Publish deltas, not vibes.
+- Claims belong in Proof or they don’t ship.
+- Prefer simple, testable systems over complex tooling.
+
+Contact:
+- hello@yoy.group

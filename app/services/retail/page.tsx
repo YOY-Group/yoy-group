@@ -7,6 +7,8 @@ export const metadata = {
     "Retail operating model design and execution cadence for founder-led brands and operators. Lean, auditable, repeatable.",
 };
 
+type Faq = { q: string; a: string };
+
 const OUTCOMES = [
   "A real weekly trading cadence (decisions, owners, deadlines)",
   "Fewer operational leaks (stock, handoffs, missing information)",
@@ -28,7 +30,7 @@ const MODULES = [
   },
   {
     title: "Execution hardening",
-    desc: "Guardrails, checklists, failure modes, and “what happens when it breaks”.",
+    desc: "Guardrails, checklists, failure modes, and what happens when it breaks.",
   },
 ] as const;
 
@@ -74,6 +76,71 @@ const ENGAGEMENTS = [
   },
 ] as const;
 
+const READINESS = {
+  title: "Readiness",
+  desc: "Not sure where to start? Run a short readiness check. It clarifies scope before any work starts.",
+  cta: "Get a readiness score →",
+  href: "/services/retail/readiness",
+} as const;
+
+const retailFaqs: readonly Faq[] = [
+  {
+    q: "Who is this for?",
+    a: "Founder-led consumer brands that want a tighter operating model: clearer range, cleaner margins, faster cycles, fewer surprises.",
+  },
+  {
+    q: "Who is this not for?",
+    a: "Teams looking for a slide deck or generic transformation theatre. We only ship what can be implemented and measured.",
+  },
+  {
+    q: "What does success look like?",
+    a: "Shorter lead times, fewer stock problems, higher conversion, and a system your team can run without heroics.",
+  },
+  {
+    q: "What do you typically change first?",
+    a: "Range logic + workflow bottlenecks. Then instrumentation: what’s true, what’s not, and what is costing you money.",
+  },
+  {
+    q: "What timeline should I expect?",
+    a: "Fast diagnosis in days, first operational changes in 2–4 weeks, compounding improvements over a quarter.",
+  },
+  {
+    q: "How do you price it?",
+    a: "Value-based and scope-based. The readiness check helps route you into the right lane before any work starts.",
+  },
+] as const;
+
+function FaqSection({ faqs }: { faqs: readonly Faq[] }) {
+  return (
+    <section className="space-y-6" aria-label="FAQ">
+      <h2 className="text-sm font-medium tracking-tight">FAQ</h2>
+
+      <ul className="space-y-3">
+        {faqs.map((f) => (
+          <li key={f.q} className="rounded-lg border border-border/60 px-5 py-4">
+            <details className="group">
+              <summary className="cursor-pointer list-none text-sm font-medium tracking-tight">
+                <span className="inline-flex items-center justify-between gap-4">
+                  {f.q}
+                  <span className="text-muted-foreground group-open:hidden">
+                    +
+                  </span>
+                  <span className="text-muted-foreground hidden group-open:inline">
+                    –
+                  </span>
+                </span>
+              </summary>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                {f.a}
+              </p>
+            </details>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export default function RetailServicesPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-24">
@@ -84,12 +151,13 @@ export default function RetailServicesPage() {
         </p>
 
         <h1 className="text-3xl font-semibold tracking-tight">
-          Retail operating models that run lean.
+          Retail operating models that hold under pressure.
         </h1>
 
         <p className="text-base leading-relaxed text-muted-foreground">
-          For brands that need execution control: clear owners, clean rhythm,
-          and a system that survives reality. Calm surface. Hard discipline underneath.
+          For brands that need execution control: clear owners, clean rhythm, and
+          a system that survives reality. Calm surface. Hard discipline
+          underneath.
         </p>
       </header>
 
@@ -164,7 +232,8 @@ export default function RetailServicesPage() {
       <section className="space-y-6" aria-label="Engagement modes">
         <h2 className="text-sm font-medium tracking-tight">Engagement modes</h2>
         <p className="text-sm leading-relaxed text-muted-foreground">
-          Three ways to start. All are timeboxed. All end in something you can run.
+          Three ways to start. All are timeboxed. All end in something you can
+          run.
         </p>
 
         <ul className="space-y-6">
@@ -185,6 +254,37 @@ export default function RetailServicesPage() {
           ))}
         </ul>
       </section>
+
+      <div className="my-12 h-px bg-border" />
+
+      {/* Readiness */}
+      <section className="space-y-4" aria-label="Readiness">
+        <h2 className="text-sm font-medium tracking-tight">{READINESS.title}</h2>
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {READINESS.desc}
+        </p>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <Link
+            href={READINESS.href}
+            className="text-sm underline underline-offset-4 hover:opacity-80"
+          >
+            {READINESS.cta}
+          </Link>
+
+          <Link
+            href="/contact"
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
+            Or contact →
+          </Link>
+        </div>
+      </section>
+
+      <div className="my-12 h-px bg-border" />
+
+      {/* FAQ */}
+      <FaqSection faqs={retailFaqs} />
 
       <div className="my-16 h-px bg-border" />
 

@@ -4,8 +4,10 @@ import Link from "next/link";
 export const metadata = {
   title: "Rails",
   description:
-    "Deterministic operating rails for commerce and communities: action → data → communication → audit. Built to run lean.",
+    "Deterministic operating rails for commerce and communities: action → data → communication → audit. Built for reliability under load.",
 };
+
+type Faq = { q: string; a: string };
 
 const RAILS = [
   {
@@ -53,7 +55,7 @@ const RAILS = [
 const GOOD_FIT = [
   "Teams shipping, but losing time to manual ops and uncertainty",
   "Commerce + data + comms that need to behave predictably",
-  "Creators/brands needing cadence, membership, and retention without chaos",
+  "Creators or brands needing cadence, membership, and retention without chaos",
   "Web3 teams needing a commerce-native bridge (utility-first, not token-first)",
 ] as const;
 
@@ -101,6 +103,71 @@ const START_HERE = [
   },
 ] as const;
 
+const READINESS = {
+  title: "Readiness",
+  desc: "Not sure which rail is actually breaking your week? Start with a short readiness check. It clarifies scope before any work starts.",
+  cta: "Get a readiness score →",
+  href: "/services/rails/readiness",
+} as const;
+
+const railsFaqs: readonly Faq[] = [
+  {
+    q: "What are ‘rails’?",
+    a: "Rails are the operating paths that make systems dependable: how actions become data, how data triggers communication, and how everything is logged and audited. Think of them as the parts of your system that must never lie.",
+  },
+  {
+    q: "Who is this for?",
+    a: "Teams running commerce or communities who want fewer unknowns: less manual work, fewer errors, and systems that behave predictably under load.",
+  },
+  {
+    q: "Who is this not for?",
+    a: "Anyone looking for a fragile automation stack or vendor sprawl. We build rails that survive growth and team turnover.",
+  },
+  {
+    q: "What does success look like?",
+    a: "Key workflows become boring. Exceptions are visible. Data is trustworthy. Decisions are faster because reality is clear.",
+  },
+  {
+    q: "What timeline should I expect?",
+    a: "Stability improvements in 1–2 weeks, core rail buildout in 4–8 weeks, then iteration based on ROI.",
+  },
+  {
+    q: "What’s the prerequisite?",
+    a: "A single source of truth — even if it’s messy today. We help define it, then harden it.",
+  },
+] as const;
+
+function FaqSection({ faqs }: { faqs: readonly Faq[] }) {
+  return (
+    <section className="space-y-6" aria-label="FAQ">
+      <h2 className="text-sm font-medium tracking-tight">FAQ</h2>
+
+      <ul className="space-y-3">
+        {faqs.map((f) => (
+          <li key={f.q} className="rounded-lg border border-border/60 px-5 py-4">
+            <details className="group">
+              <summary className="cursor-pointer list-none text-sm font-medium tracking-tight">
+                <span className="inline-flex items-center justify-between gap-4">
+                  {f.q}
+                  <span className="text-muted-foreground group-open:hidden">
+                    +
+                  </span>
+                  <span className="text-muted-foreground hidden group-open:inline">
+                    –
+                  </span>
+                </span>
+              </summary>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                {f.a}
+              </p>
+            </details>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export default function RailsServicesPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-24">
@@ -111,12 +178,13 @@ export default function RailsServicesPage() {
         </p>
 
         <h1 className="text-3xl font-semibold tracking-tight">
-          Rails that make systems operable.
+          Rails that make systems reliable under load.
         </h1>
 
         <p className="text-base leading-relaxed text-muted-foreground">
           A rail is a deterministic path from action → data → communication →
-          audit. The goal isn’t “more automation”. The goal is fewer unknowns.
+          audit. The goal isn’t more automation. The goal is fewer unknowns —
+          and faster, safer decisions when things break.
         </p>
       </header>
 
@@ -196,7 +264,7 @@ export default function RailsServicesPage() {
 
       <div className="my-12 h-px bg-border" />
 
-      {/* Start */}
+      {/* How to start */}
       <section className="space-y-6" aria-label="Start">
         <h2 className="text-sm font-medium tracking-tight">How to start</h2>
         <p className="text-sm leading-relaxed text-muted-foreground">
@@ -222,6 +290,39 @@ export default function RailsServicesPage() {
           ))}
         </ul>
       </section>
+
+      <div className="my-12 h-px bg-border" />
+
+      {/* Readiness */}
+      <section className="space-y-4" aria-label="Readiness">
+        <h2 className="text-sm font-medium tracking-tight">
+          {READINESS.title}
+        </h2>
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {READINESS.desc}
+        </p>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <Link
+            href={READINESS.href}
+            className="text-sm underline underline-offset-4 hover:opacity-80"
+          >
+            {READINESS.cta}
+          </Link>
+
+          <Link
+            href="/trust"
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
+            How we work →
+          </Link>
+        </div>
+      </section>
+
+      <div className="my-12 h-px bg-border" />
+
+      {/* FAQ */}
+      <FaqSection faqs={railsFaqs} />
 
       <div className="my-16 h-px bg-border" />
 

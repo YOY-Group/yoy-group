@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import PrimaryNav from "@/components/nav/PrimaryNav";
+import SiteFooter from "@/components/nav/SiteFooter";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -106,7 +107,6 @@ export const metadata: Metadata = {
 /**
  * ─────────────────────────────────────────────────────────────
  * JSON-LD: Organization
- * (Authoritative but intentionally restrained)
  * ─────────────────────────────────────────────────────────────
  */
 function JsonLdOrganization() {
@@ -165,7 +165,7 @@ function JsonLdWebsite() {
 
 /**
  * ─────────────────────────────────────────────────────────────
- * Root layout
+ * Root layout (sticky footer)
  * ─────────────────────────────────────────────────────────────
  */
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -177,16 +177,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           "min-h-screen",
           "bg-background text-foreground",
           "antialiased",
+          "flex flex-col",
         ].join(" ")}
       >
-        {/* Authority through restraint */}
         <JsonLdOrganization />
         <JsonLdWebsite />
 
-        <div className="mx-auto max-w-5xl px-6 py-10">
-          <PrimaryNav />
-          <main>{children}</main>
-        </div>
+        {/* Top */}
+        <PrimaryNav />
+
+        {/* Page content grows to fill viewport */}
+        <main className="flex-1">
+          <div className="mx-auto max-w-5xl px-6 py-10">{children}</div>
+        </main>
+
+        {/* Bottom */}
+        <SiteFooter />
       </body>
     </html>
   );

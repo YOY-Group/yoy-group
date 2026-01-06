@@ -4,19 +4,21 @@ import Link from "next/link";
 export const metadata = {
   title: "Creators",
   description:
-    "Creator operating systems: calendar → releases → commerce → relationship. Built to run lean, without noise.",
+    "Creator operating systems: calendar → releases → commerce → relationship. Built to ship on schedule, without noise.",
 };
 
+type Faq = { q: string; a: string };
+
 const WHAT_THIS_IS = [
-  "A repeatable release cadence tied to your real calendar (tour, content, moments)",
+  "A repeatable release cadence tied to your real calendar (shows, drops, content moments)",
   "A shipping system that doesn’t collapse into manual work",
-  "A direct relationship layer that compounds beyond platforms",
+  "A relationship layer that compounds beyond platforms",
 ] as const;
 
 const CAPABILITIES = [
   {
     title: "Cadence design",
-    desc: "Turn moments into a runnable plan — with clear owners, constraints, and an operating rhythm.",
+    desc: "Turn moments into a runnable plan — owners, constraints, rhythm. No wishful thinking.",
   },
   {
     title: "Release system",
@@ -64,7 +66,7 @@ const STARTER_ENGAGEMENTS = [
     includes: [
       "Release structure + rules (limited vs recurring)",
       "Launch gates + access behavior",
-      "Support and customer comms posture",
+      "Support + customer comms posture",
     ],
   },
   {
@@ -78,6 +80,71 @@ const STARTER_ENGAGEMENTS = [
   },
 ] as const;
 
+const READINESS = {
+  title: "Readiness",
+  desc: "Not sure what to fix first? Start with a short readiness score. It clarifies scope and routes you into the right lane before any work starts.",
+  cta: "Get a readiness score →",
+  href: "/services/creators/readiness",
+} as const;
+
+const FAQ: readonly Faq[] = [
+  {
+    q: "Who is this for?",
+    a: "Creators and teams with a real calendar (shows, releases, content moments) who want a repeatable way to ship — without building a big ops function.",
+  },
+  {
+    q: "Who is this not for?",
+    a: "One-off merch with no cadence, or teams looking for aesthetics-only work with no operating layer.",
+  },
+  {
+    q: "What does success look like in 30 days?",
+    a: "A runnable release calendar, clear rules (limited vs recurring), and a support posture that reduces manual chaos.",
+  },
+  {
+    q: "Do you run ads or do growth marketing?",
+    a: "Not as the core offer. We build the operating layer — cadence, release rules, relationship capture — so growth compounds instead of resetting.",
+  },
+  {
+    q: "Do I need Web3 or tokens?",
+    a: "No. Everything is Web2-first. If access or provenance improves retention later, we add it deliberately.",
+  },
+  {
+    q: "How do you work with managers or agencies?",
+    a: "We install a repeatable system you can reuse across talent: cadence, release rules, checklists, and a minimal relationship layer.",
+  },
+] as const;
+
+function FaqSection({ faqs }: { faqs: readonly Faq[] }) {
+  return (
+    <section className="space-y-6" aria-label="FAQ">
+      <h2 className="text-sm font-medium tracking-tight">FAQ</h2>
+
+      <ul className="space-y-3">
+        {faqs.map((f) => (
+          <li key={f.q} className="rounded-lg border border-border/60 px-5 py-4">
+            <details className="group">
+              <summary className="cursor-pointer list-none text-sm font-medium tracking-tight">
+                <span className="inline-flex items-center justify-between gap-4">
+                  {f.q}
+                  <span className="text-muted-foreground group-open:hidden">
+                    +
+                  </span>
+                  <span className="text-muted-foreground hidden group-open:inline">
+                    –
+                  </span>
+                </span>
+              </summary>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                {f.a}
+              </p>
+            </details>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export default function CreatorsServicesPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-24">
@@ -88,7 +155,7 @@ export default function CreatorsServicesPage() {
         </p>
 
         <h1 className="text-3xl font-semibold tracking-tight">
-          Turn calendar into commerce — without becoming an ops company.
+          Creator operating systems that ship on schedule.
         </h1>
 
         <p className="text-base leading-relaxed text-muted-foreground">
@@ -116,8 +183,7 @@ export default function CreatorsServicesPage() {
       <section className="space-y-6" aria-label="Capabilities">
         <h2 className="text-sm font-medium tracking-tight">Capabilities</h2>
         <p className="text-sm leading-relaxed text-muted-foreground">
-          No vague “brand building”. We install a small operating layer, then
-          iterate against reality.
+          We install a small operating layer, then iterate against reality.
         </p>
 
         <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -190,6 +256,39 @@ export default function CreatorsServicesPage() {
           ))}
         </ul>
       </section>
+
+      <div className="my-12 h-px bg-border" />
+
+      {/* Readiness */}
+      <section className="space-y-4" aria-label="Readiness">
+        <h2 className="text-sm font-medium tracking-tight">
+          {READINESS.title}
+        </h2>
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {READINESS.desc}
+        </p>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <Link
+            href={READINESS.href}
+            className="text-sm underline underline-offset-4 hover:opacity-80"
+          >
+            {READINESS.cta}
+          </Link>
+
+          <Link
+            href="/trust"
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
+            How we work →
+          </Link>
+        </div>
+      </section>
+
+      <div className="my-12 h-px bg-border" />
+
+      {/* FAQ */}
+      <FaqSection faqs={FAQ} />
 
       <div className="my-16 h-px bg-border" />
 

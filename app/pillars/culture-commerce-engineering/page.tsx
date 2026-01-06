@@ -12,7 +12,7 @@ export default function CultureCommerceEngineeringPage() {
 
         <p className="text-base leading-relaxed text-muted-foreground">
           The discipline of translating cultural signal into durable commercial
-          systems — without diluting meaning or over-optimizing for reach.
+          systems — without diluting meaning or over-optimising for reach.
         </p>
       </header>
 
