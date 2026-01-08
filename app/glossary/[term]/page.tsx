@@ -15,6 +15,25 @@ type Term = {
 
 const TERMS: Term[] = [
   {
+    slug: "agentic-commerce",
+    title: "Agentic Commerce",
+    short:
+      "Commerce systems designed to operate autonomously via agents, not manual workflows.",
+    definition:
+      "Agentic Commerce treats execution as a system: agents handle routine decisions, orchestration, and exception routing. The human defines goals, constraints, and review points; the system runs the loop and produces traceable outcomes.",
+    notes: [
+      "Automate decisions only after you can audit them.",
+      "Prefer small agents with strict scopes over one general agent.",
+      "Human-in-the-loop is a feature, not a failure mode.",
+    ],
+    related: [
+      { title: "Pillars", href: "/pillars" },
+      { title: "Proof", href: "/proof" },
+      { title: "Trust", href: "/trust" },
+    ],
+    updated: "2026-01-07",
+  },
+  {
     slug: "authority-layer",
     title: "Authority Layer",
     short: "The public surface where claims must be earned and verifiable.",
@@ -30,25 +49,25 @@ const TERMS: Term[] = [
       { title: "Pillars", href: "/pillars" },
       { title: "Trust", href: "/trust" },
     ],
-    updated: "2025-12-21",
+    updated: "2026-01-07",
   },
   {
-    slug: "pillars",
-    title: "Pillars",
-    short: "Stable primitives that change slowly and only when reality changes.",
+    slug: "culture-commerce",
+    title: "Culture–Commerce",
+    short: "The translation of cultural signal into durable commercial systems.",
     definition:
-      "Pillars are the small set of enduring primitives that define how YOY thinks and builds. They are designed to be stable over time, referenced often, and updated rarely—only when the operating reality changes.",
-    related: [{ title: "Pillars", href: "/pillars" }],
-    updated: "2025-12-21",
-  },
-  {
-    slug: "proof",
-    title: "Proof",
-    short: "Evidence of execution: logs, artifacts, experiments, and outcomes.",
-    definition:
-      "Proof is the archive of build logs and execution evidence. It exists to demonstrate reality, not interpretation. Proof should be concrete: artifacts, traces, screenshots, metrics, and postmortems—without hype language.",
-    related: [{ title: "Proof", href: "/proof" }],
-    updated: "2025-12-21",
+      "Culture–Commerce is the operating discipline of converting signal (taste, scenes, identity, rituals) into repeatable product, distribution, and retention loops—without collapsing into hype. The output is legible product and compounding demand.",
+    notes: [
+      "Signal must become structure (offers, drops, rituals, repeat loops).",
+      "Legibility beats attention over time.",
+      "If it can’t be operationalised, it’s just commentary.",
+    ],
+    related: [
+      { title: "Authority Layer", href: "/glossary/authority-layer" },
+      { title: "Proof", href: "/proof" },
+      { title: "Trust", href: "/trust" },
+    ],
+    updated: "2026-01-07",
   },
 ];
 
@@ -112,7 +131,9 @@ export default async function GlossaryTermPage({ params }: PageProps) {
         <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Definition
         </h2>
-        <p className="text-sm leading-relaxed text-foreground">{term.definition}</p>
+        <p className="text-sm leading-relaxed text-foreground">
+          {term.definition}
+        </p>
       </section>
 
       {term.notes?.length ? (
@@ -162,7 +183,7 @@ export default async function GlossaryTermPage({ params }: PageProps) {
         <Link href="/glossary" className="hover:text-foreground">
           ← Back to Glossary
         </Link>
-        <span>Authority layer · Definitions are precise.</span>
+        <span>Definitions are precise.</span>
       </footer>
     </main>
   );

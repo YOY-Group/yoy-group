@@ -7,23 +7,23 @@ export const metadata = {
     "Canonical definitions used by YOY.Group. Language as infrastructure.",
 };
 
-const TERMS = [
+const INDEX_TERMS = [
   {
     term: "Agentic Commerce",
     href: "/glossary/agentic-commerce",
-    desc: "Commerce systems designed to operate autonomously via agents, not workflows.",
+    desc: "Commerce systems designed to operate autonomously via agents, not manual workflows.",
   },
   {
     term: "Authority Layer",
     href: "/glossary/authority-layer",
-    desc: "The trust surface created through proof, clarity, and consistency over time.",
+    desc: "The public trust surface where claims must be earned and verifiable.",
   },
   {
     term: "Culture–Commerce",
     href: "/glossary/culture-commerce",
     desc: "The translation of cultural signal into durable commercial systems.",
   },
-];
+] as const;
 
 export default function GlossaryPage() {
   return (
@@ -41,12 +41,9 @@ export default function GlossaryPage() {
 
       <section aria-label="Glossary terms">
         <ul className="space-y-6">
-          {TERMS.map((item) => (
+          {INDEX_TERMS.map((item) => (
             <li key={item.href} className="group">
-              <Link
-                href={item.href}
-                className="block space-y-1 hover:opacity-90"
-              >
+              <Link href={item.href} className="block space-y-1 hover:opacity-90">
                 <h2 className="text-sm font-medium">{item.term}</h2>
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   {item.desc}
@@ -57,7 +54,9 @@ export default function GlossaryPage() {
         </ul>
       </section>
 
-      <footer className="mt-16 text-xs text-muted-foreground">
+      <div className="my-16 h-px bg-border" />
+
+      <footer className="text-xs text-muted-foreground">
         Language is treated as infrastructure.
       </footer>
     </main>

@@ -25,18 +25,35 @@ const PROOF_MAP: Record<string, ProofEntry> = {
     date: "2025-12-20",
     tag: "Release",
     summary:
-      "Initial public deployment of the SKIN storefront with environment hygiene, route discipline, and exposure minimization.",
+      "Initial public deployment of the SKIN storefront with environment hygiene, route discipline, and exposure minimisation.",
     body: [
       "Objective: deploy a public-facing commerce surface without leaking operational internals.",
       "Actions taken:",
       "- Separated public and server-only environment variables.",
       "- Removed debug routes from public navigation.",
-      "- Standardized Supabase service-role handling.",
+      "- Standardised Supabase service-role handling.",
       "Result: a clean, auditable storefront surface with reduced blast radius.",
       "Notes: checkout remains gated upstream by Shopify configuration.",
     ],
   },
 
+  "supabase-key-hygiene-service-role-isolation": {
+    title: "Supabase key hygiene — service role isolation",
+    date: "2025-12-20",
+    tag: "Governance",
+    summary:
+      "Isolated service-role usage to server-only contexts, standardised env naming, and removed accidental client exposure paths.",
+    body: [
+      "Objective: ensure no privileged keys can reach the client bundle.",
+      "Actions taken:",
+      "- Standardised naming: NEXT_PUBLIC_* for client-safe only; server keys kept unprefixed.",
+      "- Removed service-role access from any client-facing code paths.",
+      "- Confirmed server-only usage patterns for admin operations.",
+      "Result: reduced blast radius and clearer key governance boundaries.",
+      "Next: add automated checks (lint/CI) to prevent regressions.",
+    ],
+  },
+  
   "yoy-group-authority-scaffold": {
     title: "YOY.Group authority scaffold",
     date: "2025-12-21",

@@ -14,7 +14,7 @@ export default function TrustPressPage() {
         </p>
         <h1 className="text-3xl font-semibold tracking-tight">Press</h1>
         <p className="text-sm leading-relaxed text-muted-foreground">
-          Placeholder. Replace with press kit links and official references.
+          Official references, media enquiries, and press materials will appear here when relevant.
         </p>
       </header>
     </main>

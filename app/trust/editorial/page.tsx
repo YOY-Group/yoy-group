@@ -14,7 +14,8 @@ export default function TrustEditorialPage() {
         </p>
         <h1 className="text-3xl font-semibold tracking-tight">Editorial</h1>
         <p className="text-sm leading-relaxed text-muted-foreground">
-          Placeholder. Replace with final editorial standards.
+          This page defines the standards governing what we publish — clarity, evidence, and intent.
+          Posts appear when they meet them.
         </p>
       </header>
     </main>

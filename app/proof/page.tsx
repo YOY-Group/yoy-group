@@ -29,7 +29,7 @@ const PROOF: ProofItem[] = [
     href: "/proof/supabase-key-hygiene-service-role-isolation",
     date: "2025-12-20",
     tag: "Governance",
-    desc: "Standardized server-only key naming, removed accidental exposure paths.",
+    desc: "Standardised server-only key naming, removed accidental exposure paths.",
   },
   {
     title: "YOY.Group authority scaffold — shadcn + Tailwind baseline",
