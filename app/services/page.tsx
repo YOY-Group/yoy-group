@@ -161,6 +161,10 @@ export default function ServicesPage() {
           decisions, and automation with guardrails. The public surface is calm;
           the work is precise.
         </p>
+
+        <p className="mt-3 text-xs text-muted-foreground">
+          Services delivered by <span className="font-medium text-foreground">YOY.AI Studio</span> — a division of YOY.Group.
+        </p>
       </header>
 
       <div className="mx-auto my-12 h-px max-w-3xl bg-border" />

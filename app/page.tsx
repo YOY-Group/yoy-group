@@ -21,17 +21,28 @@ const PILLARS = [
 
 export default function Page() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-24">
+    <main className="mx-auto max-w-5xl px-6 py-20">
       {/* Hero */}
       <header className="space-y-6">
-        <h1 className="text-3xl font-semibold tracking-tight">YOY.Group</h1>
+        <div className="max-w-3xl">
+          <h1 className="text-3xl font-semibold tracking-tight">YOY.Group</h1>
 
-        <p className="text-base leading-relaxed text-muted-foreground">
-          Autonomous, culture-led consumer systems.
-          <br />
-          We design retail operating models where brand, software, and
-          distribution move as one.
-        </p>
+          <h2 className="mt-6 text-4xl font-semibold tracking-tight leading-[1.05] md:text-5xl">
+            We help brands run better.
+          </h2>
+
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+            We fix how companies sell, ship, and grow — using systems, not slides.
+          </p>
+
+          <ul className="mt-6 space-y-2 text-sm text-foreground">
+            <li>How your business is structured</li>
+            <li>How work actually gets done</li>
+            <li>How results are proven, not promised</li>
+          </ul>
+
+          <p className="mt-6 text-xs text-muted-foreground">Proof beats promises.</p>
+        </div>
       </header>
 
       {/* Divider */}
@@ -55,14 +66,14 @@ export default function Page() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
           {PILLARS.map((p) => (
             <Link
               key={p.title}
               href={p.href}
-              className="group rounded-lg border border-border bg-background p-4 transition-colors hover:bg-muted/30"
+              className="group rounded-lg border border-border bg-background p-6 transition-colors hover:bg-muted/30"
             >
-              <div className="text-sm font-medium text-foreground">
+              <div className="text-base font-medium text-foreground">
                 {p.title}
               </div>
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">

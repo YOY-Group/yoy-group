@@ -13,7 +13,7 @@ export default function RetailOpsArchitecturePage() {
         <p className="text-base leading-relaxed text-muted-foreground">
           The design of operating models that connect product, supply,
           data, and execution into a coherent system — built to adapt
-          without constant reorganization.
+          without constant reorganisation.
         </p>
       </header>
 
