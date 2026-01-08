@@ -8,8 +8,9 @@ const COLS = [
       { href: "/pillars", label: "Pillars" },
       { href: "/log", label: "Log" },
       { href: "/proof", label: "Proof" },
-      { href: "/playbooks", label: "Playbooks" },
       { href: "/glossary", label: "Glossary" },
+      { href: "/about", label: "About" },
+      { href: "/andrey", label: "Andrey" },
     ],
   },
   {
@@ -59,7 +60,7 @@ export default function SiteFooter() {
               Less chaos. More shipping.
             </p>
 
-            <p className="text-xs text-muted-foreground">Proof over promises.</p>
+            <p className="text-xs text-muted-foreground">Proof beats promises.</p>
           </div>
 
           {/* Columns */}
