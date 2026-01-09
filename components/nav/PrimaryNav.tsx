@@ -31,12 +31,19 @@ export default function PrimaryNav() {
             aria-label="YOY.Group home"
             className="flex items-center gap-3 text-sm font-medium tracking-wide text-foreground hover:opacity-80 transition-opacity"
           >
-            <img
+           <img
               src="/brand/y-glyph.svg"
-              alt=""
+              alt="YOY"
               width={26}
               height={26}
-              className="h-[26px] w-[26px] shrink-0"
+              className="h-[26px] w-[26px] shrink-0 dark:hidden"
+            />
+            <img
+              src="/brand/y-glyph-white.svg"
+              alt="YOY"
+              width={26}
+              height={26}
+              className="h-[26px] w-[26px] shrink-0 hidden dark:block"
             />
             <span className="hidden sm:inline">YOY.Group</span>
             <span className="sm:hidden">YOY</span>

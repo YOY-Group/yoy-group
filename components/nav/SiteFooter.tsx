@@ -42,16 +42,26 @@ export default function SiteFooter() {
           {/* Brand block */}
           <div className="space-y-4 md:col-span-5">
             <div className="flex items-center gap-3">
+              {/* Light */}
               <img
                 src="/brand/y-glyph.svg"
                 alt=""
                 width={18}
                 height={18}
-                className="h-[18px] w-[18px]"
+                className="h-[18px] w-[18px] dark:hidden"
               />
+              {/* Dark */}
+              <img
+                src="/brand/y-glyph-white.svg"
+                alt=""
+                width={18}
+                height={18}
+                className="h-[18px] w-[18px] hidden dark:block"
+              />
+
               <span className="text-sm font-medium">YOY.Group</span>
             </div>
-
+            
             <p className="text-sm leading-relaxed text-muted-foreground">
               We build operating systems for
               <br />

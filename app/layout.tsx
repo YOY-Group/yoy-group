@@ -37,8 +37,11 @@ const SAME_AS = [
  * ─────────────────────────────────────────────────────────────
  */
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
-  colorScheme: "light",
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
 };
 
 /**
@@ -77,6 +80,17 @@ export const metadata: Metadata = {
       { url: "/favicon.ico", sizes: "any", type: "image/x-icon" },
       { url: "/brand/y-glyph/favicon-32.png", sizes: "32x32", type: "image/png" },
       { url: "/brand/y-glyph/favicon-16.png", sizes: "16x16", type: "image/png" },
+
+      {
+        url: "/brand/y-glyph.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/brand/y-glyph-white.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: dark)",
+      },
     ],
     apple: [
       {
@@ -171,6 +185,24 @@ function JsonLdWebsite() {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Inject theme class early (enables Tailwind `dark:` + allows logo swaps) */}
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `
+(function() {
+  try {
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var root = document.documentElement;
+    if (prefersDark) root.classList.add('dark');
+    else root.classList.remove('dark');
+  } catch (e) {}
+})();`,
+          }}
+        />
+      </head>
+
       <body
         className={[
           inter.variable,
