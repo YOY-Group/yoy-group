@@ -35,17 +35,17 @@ The site is organized around **authority primitives**, not funnels.
 - **/pillars**  
   Stable operating principles. Slow to change.
 
-- **/index**  
+- **/log**  
   Time-bound snapshots (quarterly / annual).
 
 - **/proof**  
   Build logs, experiments, execution evidence.
 
-- **/glossary**  
-  Canonical definitions. Language as infrastructure.
-
 - **/services**  
   Quiet B2B surface. Opt-in only.
+
+- **/glossary**  
+  Canonical definitions. Language as infrastructure.
 
 - **/trust**  
   Editorial policy, corrections, disclosure.

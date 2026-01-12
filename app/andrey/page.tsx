@@ -1,24 +1,72 @@
 // app/andrey/page.tsx
+import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Andrey Voronkov · YOY.Group",
+export const metadata: Metadata = buildMetadata({
+  title: "Andrey Voronkov",
   description:
-    "Andrey Voronkov is the founder of YOY.Group. Retail operations operator and AI commerce systems builder — shipping-first, proof-led.",
-  openGraph: {
-    title: "Andrey Voronkov · YOY.Group",
-    description:
-      "Retail operations operator and AI commerce systems builder — shipping-first, proof-led.",
-    type: "profile",
+    "Andrey Voronkov is the founder of YOY.Group. Retail operator, agentic commerce systems builder, and culture→commerce translator — shipping-first, proof-led.",
+  path: "/andrey",
+  type: "article",
+  imagePath: "/og/og.png",
+});
+
+// Optional: keep these in one place so the page stays consistent + easy to audit.
+const LINKS = {
+  email: "mailto:andrey@yoy.group",
+  linkedin: "https://linkedin.com/in/andreyvoronkov",
+} as const;
+
+const FOCUS = [
+  {
+    k: "Retail Operator",
+    v: "Trading cadence, store performance, franchise governance, openings, and end-to-end operational discipline.",
   },
-  twitter: {
-    card: "summary",
-    title: "Andrey Voronkov · YOY.Group",
-    description:
-      "Retail operations operator and AI commerce systems builder — shipping-first, proof-led.",
+  {
+    k: "Agentic Commerce Systems",
+    v: "Bounded automation, decision guardrails, and auditable workflows across commerce ops.",
   },
-};
+  {
+    k: "Culture → Commerce",
+    v: "Translate signal into legible product, drops, and retention loops.",
+  },
+] as const;
+
+const SELECTED = [
+  {
+    role: "Retail Management Consultant — multi-brand fashion (UK + Europe)",
+    note: "Operational stabilisation, value chain improvement, and scalable operating systems.",
+  },
+  {
+    role: "General Manager (Europe) — P&L ownership",
+    note: "Growth planning + execution across D2C/wholesale; reporting to board-level stakeholders.",
+  },
+  {
+    role: "International Franchise Retail Manager — 100+ locations / multi-country portfolio",
+    note: "Partner management, standards, and operating discipline across a distributed estate.",
+  },
+  {
+    role: "Head of Retail (UK) + European Retail Ops leadership",
+    note: "Store performance management, openings/closures, and ops execution at scale.",
+  },
+] as const;
+
+const CREDENTIALS = [
+  { k: "Executive MBA", v: "Fashion (University of the Arts London)." },
+  {
+    k: "PG Cert",
+    v: "Fashion Buying & Merchandising (London College of Fashion, UAL).",
+  },
+  { k: "Chartered Manager", v: "Strategic Management & Leadership (CMI)." },
+  { k: "Languages", v: "English, French, Russian." },
+] as const;
+
+const PRINCIPLES = [
+  { k: "Shipping first", v: "Small releases, tight loops." },
+  { k: "Proof over theatre", v: "Logs, before/after, trace." },
+  { k: "Systems beat heroics", v: "The machine must run without you." },
+] as const;
 
 export default function AndreyPage() {
   return (
@@ -28,30 +76,36 @@ export default function AndreyPage() {
           Profile
         </p>
 
-        <h1 className="text-3xl font-semibold tracking-tight">Andrey Voronkov</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">
+          Andrey Voronkov
+        </h1>
 
         <p className="text-base leading-relaxed text-muted-foreground">
-          Founder at <span className="text-foreground">YOY.Group</span>. I build operating
-          systems for retail — from execution cadence and trading discipline to
-          automation, data, and customer loops.
+          Founder at <span className="text-foreground">YOY.Group</span>. I build
+          operating systems for modern commerce — from trading cadence and store
+          execution to automation, data, and customer loops. UK-based. Shipping
+          first.
         </p>
 
         <div className="flex flex-wrap items-center gap-4 text-sm">
           <a
-            href="mailto:andrey@yoy.group"
+            href={LINKS.email}
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
             andrey@yoy.group
           </a>
+
           <span className="text-muted-foreground">·</span>
+
           <a
-            href="https://linkedin.com/in/andreyvoronkov"
+            href={LINKS.linkedin}
             target="_blank"
             rel="noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
             LinkedIn
           </a>
+
           <span className="text-muted-foreground">·</span>
           <span className="text-muted-foreground">London, UK</span>
         </div>
@@ -60,30 +114,69 @@ export default function AndreyPage() {
       <div className="my-12 h-px bg-border" />
 
       <section className="space-y-10">
+        {/* Operator background strip */}
+        <div className="space-y-3">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+            Background
+          </h2>
+
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            20+ years across fashion retail operations in the UK + international
+            markets — spanning store leadership, multi-site ops, handoff points
+            between retail/wholesale, franchise portfolios, and P&amp;L
+            ownership. I package the work into systems teams can run: cadence,
+            controls, and proof.
+          </p>
+
+          <ul className="space-y-2 text-sm leading-relaxed text-muted-foreground">
+            {CREDENTIALS.map((x) => (
+              <li key={x.k}>
+                <span className="text-foreground">{x.k}:</span> {x.v}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Focus lanes (3) */}
         <div className="space-y-3">
           <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Focus
           </h2>
+
           <ul className="space-y-2 text-sm leading-relaxed text-muted-foreground">
-            <li>
-              <span className="text-foreground">Retail Operations:</span> execution cadence,
-              accountability, handoffs, and measurable performance.
-            </li>
-            <li>
-              <span className="text-foreground">AI Commerce Systems:</span> agent-assisted
-              workflows, decision guardrails, and auditable automation.
-            </li>
-            <li>
-              <span className="text-foreground">Culture → Commerce:</span> translating signal
-              into legible product, drops, and retention loops.
-            </li>
+            {FOCUS.map((x) => (
+              <li key={x.k}>
+                <span className="text-foreground">{x.k}:</span> {x.v}
+              </li>
+            ))}
           </ul>
         </div>
 
+        {/* Selected experience (CV-shape, no sensitive details) */}
+        <div className="space-y-3">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+            Selected experience
+          </h2>
+
+          <ul className="space-y-2 text-sm leading-relaxed text-muted-foreground">
+            {SELECTED.map((x) => (
+              <li key={x.role}>
+                <span className="text-foreground">{x.role}:</span> {x.note}
+              </li>
+            ))}
+          </ul>
+
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            Full chronology lives on LinkedIn.
+          </p>
+        </div>
+
+        {/* Now */}
         <div className="space-y-3">
           <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Now
           </h2>
+
           <p className="text-sm leading-relaxed text-muted-foreground">
             YOY.Group is the public authority surface. Work ships as{" "}
             <Link href="/proof" className="text-foreground hover:underline">
@@ -91,53 +184,70 @@ export default function AndreyPage() {
             </Link>
             . Anything else is noise.
           </p>
+
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            Note: “agentic” here means bounded automation under explicit
+            governance — not black-box autonomy.
+          </p>
         </div>
 
+        {/* Principles */}
         <div className="space-y-3">
           <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Principles
           </h2>
+
           <ul className="space-y-2 text-sm leading-relaxed text-muted-foreground">
-            <li>
-              <span className="text-foreground">Shipping first:</span> small releases, tight loops.
-            </li>
-            <li>
-              <span className="text-foreground">Proof over theatre:</span> logs, before/after, trace.
-            </li>
-            <li>
-              <span className="text-foreground">Systems beat heroics:</span> the machine must run.
-            </li>
+            {PRINCIPLES.map((x) => (
+              <li key={x.k}>
+                <span className="text-foreground">{x.k}:</span> {x.v}
+              </li>
+            ))}
           </ul>
         </div>
 
+        {/* Start */}
         <div className="space-y-3">
           <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-            Contact
+            Start
           </h2>
+
           <p className="text-sm leading-relaxed text-muted-foreground">
-            If you want to explore fit, send a short note with: current stack, primary constraint,
-            and what success must look like in 30 days.
+            If you want to explore fit, send a short note with: current stack,
+            primary constraint, and what success must look like in 30 days.
           </p>
+
           <div className="flex flex-wrap items-center gap-4 text-sm">
-            <a
-              href="mailto:andrey@yoy.group"
+            <Link
+              href="/contact"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              Email
-            </a>
-            <Link href="/services" className="text-muted-foreground hover:text-foreground transition-colors">
+              Contact →
+            </Link>
+
+            <Link
+              href="/services"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Services
             </Link>
-            <Link href="/trust" className="text-muted-foreground hover:text-foreground transition-colors">
+
+            <Link
+              href="/trust"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Trust
             </Link>
           </div>
         </div>
       </section>
 
-      <footer className="mt-16 text-xs text-muted-foreground">
+      <footer className="mt-16 flex flex-wrap items-center justify-between gap-4 text-xs text-muted-foreground">
         <Link href="/" className="hover:text-foreground">
           ← Home
+        </Link>
+        <Link href="/proof" className="hover:text-foreground">
+          Proof →
         </Link>
       </footer>
     </main>

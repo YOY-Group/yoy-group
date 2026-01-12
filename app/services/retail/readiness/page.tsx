@@ -65,6 +65,13 @@ export default function RetailReadinessPage() {
         </Link>
 
         <Link
+          href="/operator"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          How we work →
+        </Link>
+
+        <Link
           href="/contact"
           className="text-sm underline underline-offset-4 hover:opacity-80"
         >

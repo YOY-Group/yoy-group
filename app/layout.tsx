@@ -5,6 +5,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import PrimaryNav from "@/components/nav/PrimaryNav";
 import SiteFooter from "@/components/nav/SiteFooter";
+import { getSiteUrl } from "@/lib/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,11 +15,11 @@ const inter = Inter({
 
 /**
  * ─────────────────────────────────────────────────────────────
- * Canonical identity constants
+ * Canonical identity (single source of truth)
  * ─────────────────────────────────────────────────────────────
  */
 const SITE_NAME = "YOY.Group";
-const SITE_URL = "https://yoy.group";
+const SITE_URL = getSiteUrl(); // derived from NEXT_PUBLIC_SITE_URL / VERCEL_URL fallback
 const DEFAULT_TITLE = "YOY.Group";
 const DEFAULT_DESCRIPTION =
   "Agent-led, culture-native operating systems for commerce. We design retail architectures where brand, software, and distribution move as one.";
@@ -30,6 +31,11 @@ const SAME_AS = [
   "https://www.tiktok.com/@yoy_group",
   "https://github.com/YOY-Group",
 ];
+
+/**
+ * Absolute-safe OG image (never breaks even if metadataBase changes later)
+ */
+const OG_IMAGE = new URL("/og/og.png", SITE_URL).toString();
 
 /**
  * ─────────────────────────────────────────────────────────────
@@ -59,6 +65,11 @@ export const metadata: Metadata = {
 
   description: DEFAULT_DESCRIPTION,
 
+  /**
+   * Canonical rule (merge-safe):
+   * - Layout canonical is "/" (path-based) when metadataBase is set
+   * - Each page sets its own canonical path ("/services", etc.)
+   */
   alternates: {
     canonical: "/",
   },
@@ -80,7 +91,6 @@ export const metadata: Metadata = {
       { url: "/favicon.ico", sizes: "any", type: "image/x-icon" },
       { url: "/brand/y-glyph/favicon-32.png", sizes: "32x32", type: "image/png" },
       { url: "/brand/y-glyph/favicon-16.png", sizes: "16x16", type: "image/png" },
-
       {
         url: "/brand/y-glyph.svg",
         type: "image/svg+xml",
@@ -105,16 +115,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
-    url: SITE_URL,
+    url: new URL("/", SITE_URL).toString(),
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
     locale: "en_GB",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} — ${DEFAULT_TITLE}`,
+      },
+    ],
   },
 
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
+    images: [OG_IMAGE],
   },
 };
 
@@ -165,6 +184,7 @@ function JsonLdWebsite() {
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
+      url: `${SITE_URL}/`,
     },
   };
 
@@ -215,15 +235,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <JsonLdOrganization />
         <JsonLdWebsite />
 
-        {/* Top */}
         <PrimaryNav />
 
-        {/* Page content grows to fill viewport */}
         <main className="flex-1">
           <div className="mx-auto max-w-5xl px-6 py-10">{children}</div>
         </main>
 
-        {/* Bottom */}
         <SiteFooter />
       </body>
     </html>

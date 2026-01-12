@@ -1,12 +1,16 @@
 // app/services/creators/readiness/page.tsx
-import Link from "next/link";
+import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
+import Link from "next/link";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Creators Readiness",
   description:
     "A short readiness check for creators: calendar → releases → merch → relationship. Built to ship without becoming an ops company.",
-};
+  path: "/services/creators/readiness",
+  type: "article",
+  imagePath: "/og/og.png",
+});
 
 const CHECKLIST = [
   "Calendar reality: what’s happening in the next 8–12 weeks",
@@ -27,8 +31,8 @@ export default function CreatorsReadinessPage() {
         </h1>
 
         <p className="text-base leading-relaxed text-muted-foreground">
-          A short readiness check that turns your next 8–12 weeks into a runnable
-          release + relationship plan — without adding noise.
+          A short readiness check that turns your next 8–12 weeks into a
+          runnable release + relationship plan — without adding noise.
         </p>
       </header>
 
@@ -64,6 +68,13 @@ export default function CreatorsReadinessPage() {
           className="text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           ← Back to Creators
+        </Link>
+
+        <Link
+          href="/operator"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          How we work →
         </Link>
 
         <Link

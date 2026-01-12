@@ -1,4 +1,5 @@
 // app/log/[issue]/page.tsx
+import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -65,22 +66,35 @@ type PageProps = {
   params: Promise<{ issue: string }>;
 };
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const resolved = await params;
-  const issue = getIssue(resolved.issue);
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { issue: issueSlug } = await params;
+  const issue = getIssue(issueSlug);
 
-  if (!issue) return { title: "Log · YOY.Group" };
+  if (!issue) {
+    return buildMetadata({
+      title: "Log",
+      description:
+        "Time-bound logs (quarterly / annual) documenting what YOY.Group ships, proves, and updates.",
+      path: "/log",
+      type: "website",
+      imagePath: "/og/og.png",
+    });
+  }
 
-  const title = `${issue.title} · Log · YOY.Group`;
   const description =
-    issue.summary.length > 160 ? `${issue.summary.slice(0, 157)}…` : issue.summary;
+    issue.summary.length > 160
+      ? `${issue.summary.slice(0, 157)}…`
+      : issue.summary;
 
-  return {
-    title,
+  return buildMetadata({
+    title: issue.title,
     description,
-    openGraph: { title, description, type: "article" },
-    twitter: { card: "summary", title, description },
-  };
+    path: `/log/${issue.slug}`,
+    type: "article",
+    imagePath: "/og/og.png",
+  });
 }
 
 function StatusPill({ status }: { status: IssueStatus }) {
@@ -93,8 +107,8 @@ function StatusPill({ status }: { status: IssueStatus }) {
 }
 
 export default async function LogIssuePage({ params }: PageProps) {
-  const resolved = await params;
-  const issue = getIssue(resolved.issue);
+  const { issue: issueSlug } = await params;
+  const issue = getIssue(issueSlug);
   if (!issue) return notFound();
 
   const idx = ISSUES.findIndex((i) => i.slug === issue.slug);
@@ -109,10 +123,14 @@ export default async function LogIssuePage({ params }: PageProps) {
         </p>
 
         <div className="space-y-3">
-          <h1 className="text-3xl font-semibold tracking-tight">{issue.title}</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">
+            {issue.title}
+          </h1>
 
           <div className="flex flex-wrap items-center gap-3">
-            <span className="text-xs text-muted-foreground">{issue.timeframe}</span>
+            <span className="text-xs text-muted-foreground">
+              {issue.timeframe}
+            </span>
             <span className="text-xs text-muted-foreground">·</span>
             <StatusPill status={issue.status} />
           </div>
@@ -131,8 +149,8 @@ export default async function LogIssuePage({ params }: PageProps) {
             Snapshot
           </h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            This is a bounded list of what matters this period. If a claim can’t be
-            traced, it doesn’t ship.
+            This is a bounded list of what matters this period. If a claim can’t
+            be traced, it doesn’t ship.
           </p>
         </div>
 

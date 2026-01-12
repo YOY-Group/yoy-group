@@ -1,5 +1,16 @@
 // app/pillars/culture-commerce-engineering/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Culture–Commerce Engineering",
+  description:
+    "The discipline of translating cultural signal into durable commercial systems — without diluting meaning or over-optimising for reach.",
+  path: "/pillars/culture-commerce-engineering",
+  type: "article",
+  twitterCard: "summary_large_image",
+});
 
 export default function CultureCommerceEngineeringPage() {
   return (
@@ -19,7 +30,7 @@ export default function CultureCommerceEngineeringPage() {
       <div className="my-16 h-px bg-border" />
 
       {/* Definition */}
-      <section className="space-y-6">
+      <section className="space-y-6" aria-label="Definition">
         <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Definition
         </h2>
@@ -27,8 +38,8 @@ export default function CultureCommerceEngineeringPage() {
         <p className="text-sm leading-relaxed">
           Culture–Commerce Engineering treats taste, language, and community as
           structural inputs. It designs how cultural meaning moves through
-          products, platforms, and distribution — deliberately, measurably,
-          and with long-term intent.
+          products, platforms, and distribution — deliberately, measurably, and
+          with long-term intent.
         </p>
 
         <p className="text-sm leading-relaxed text-muted-foreground">
@@ -40,7 +51,7 @@ export default function CultureCommerceEngineeringPage() {
       <div className="my-16 h-px bg-border" />
 
       {/* Principles */}
-      <section className="space-y-6">
+      <section className="space-y-6" aria-label="Operating principles">
         <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Operating Principles
         </h2>
@@ -68,7 +79,7 @@ export default function CultureCommerceEngineeringPage() {
       <div className="my-16 h-px bg-border" />
 
       {/* What this enables */}
-      <section className="space-y-6">
+      <section className="space-y-6" aria-label="What this enables">
         <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           What This Enables
         </h2>

@@ -1,29 +1,16 @@
 // app/glossary/page.tsx
 import Link from "next/link";
+import { buildMetadata } from "@/lib/seo";
+import { GLOSSARY_INDEX } from "./terms";
 
-export const metadata = {
+export const metadata = buildMetadata({
   title: "Glossary",
   description:
     "Canonical definitions used by YOY.Group. Language as infrastructure.",
-};
-
-const INDEX_TERMS = [
-  {
-    term: "Agentic Commerce",
-    href: "/glossary/agentic-commerce",
-    desc: "Commerce systems designed to operate autonomously via agents, not manual workflows.",
-  },
-  {
-    term: "Authority Layer",
-    href: "/glossary/authority-layer",
-    desc: "The public trust surface where claims must be earned and verifiable.",
-  },
-  {
-    term: "Culture–Commerce",
-    href: "/glossary/culture-commerce",
-    desc: "The translation of cultural signal into durable commercial systems.",
-  },
-] as const;
+  path: "/glossary",
+  type: "website",
+  imagePath: "/og/og.png",
+});
 
 export default function GlossaryPage() {
   return (
@@ -41,7 +28,7 @@ export default function GlossaryPage() {
 
       <section aria-label="Glossary terms">
         <ul className="space-y-6">
-          {INDEX_TERMS.map((item) => (
+          {GLOSSARY_INDEX.map((item) => (
             <li key={item.href} className="group">
               <Link href={item.href} className="block space-y-1 hover:opacity-90">
                 <h2 className="text-sm font-medium">{item.term}</h2>

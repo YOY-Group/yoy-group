@@ -1,11 +1,16 @@
 // app/services/rails/page.tsx
+import { buildMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Rails",
   description:
     "Deterministic operating rails for commerce and communities: action → data → communication → audit. Built for reliability under load.",
-};
+  path: "/services/rails",
+  type: "website",
+  imagePath: "/og/og.png",
+});
 
 type Faq = { q: string; a: string };
 
@@ -144,7 +149,10 @@ function FaqSection({ faqs }: { faqs: readonly Faq[] }) {
 
       <ul className="space-y-3">
         {faqs.map((f) => (
-          <li key={f.q} className="rounded-lg border border-border/60 px-5 py-4">
+          <li
+            key={f.q}
+            className="rounded-lg border border-border/60 px-5 py-4"
+          >
             <details className="group">
               <summary className="cursor-pointer list-none text-sm font-medium tracking-tight">
                 <span className="inline-flex items-center justify-between gap-4">
@@ -196,7 +204,10 @@ export default function RailsServicesPage() {
 
         <ul className="space-y-6">
           {RAILS.map((r) => (
-            <li key={r.title} className="rounded-lg border border-border/60 p-6">
+            <li
+              key={r.title}
+              className="rounded-lg border border-border/60 p-6"
+            >
               <div className="space-y-2">
                 <p className="text-sm font-medium">{r.title}</p>
                 <p className="text-sm leading-relaxed text-muted-foreground">
@@ -274,7 +285,10 @@ export default function RailsServicesPage() {
 
         <ul className="space-y-6">
           {START_HERE.map((m) => (
-            <li key={m.title} className="rounded-lg border border-border/60 p-6">
+            <li
+              key={m.title}
+              className="rounded-lg border border-border/60 p-6"
+            >
               <div className="space-y-2">
                 <p className="text-sm font-medium">{m.title}</p>
                 <p className="text-sm leading-relaxed text-muted-foreground">
@@ -311,7 +325,7 @@ export default function RailsServicesPage() {
           </Link>
 
           <Link
-            href="/trust"
+            href="/operator"
             className="text-sm text-muted-foreground hover:text-foreground"
           >
             How we work →
@@ -330,8 +344,8 @@ export default function RailsServicesPage() {
       <section className="space-y-4" aria-label="Next steps">
         <h2 className="text-sm font-medium tracking-tight">Next steps</h2>
         <p className="text-sm leading-relaxed text-muted-foreground">
-          Send a short note: current stack, which rail you want hardened (events,
-          messaging, access, proof), and what must be true in 30 days.
+          Send a short note: current stack, which rail you want hardened
+          (events, messaging, access, proof), and what must be true in 30 days.
         </p>
 
         <div className="flex flex-wrap items-center gap-3">

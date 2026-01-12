@@ -1,12 +1,16 @@
 // app/services/rails/readiness/page.tsx
-import Link from "next/link";
+import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
+import Link from "next/link";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Rails Readiness",
   description:
     "A short readiness check for deterministic rails: events, messaging, access, proof. Built for reliability under load.",
-};
+  path: "/services/rails/readiness",
+  type: "article",
+  imagePath: "/og/og.png",
+});
 
 const CHECKLIST = [
   "Event rail: entities, naming discipline, drift control",
@@ -51,8 +55,8 @@ export default function RailsReadinessPage() {
           >
             hello@yoy.group
           </a>{" "}
-          with: current stack, the rail you suspect is failing (events / messaging
-          / access / proof), and what must be true in 30 days.
+          with: current stack, the rail you suspect is failing (events /
+          messaging / access / proof), and what must be true in 30 days.
         </p>
       </section>
 
@@ -64,6 +68,13 @@ export default function RailsReadinessPage() {
           className="text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           ← Back to Rails
+        </Link>
+
+        <Link
+          href="/operator"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          How we work →
         </Link>
 
         <Link

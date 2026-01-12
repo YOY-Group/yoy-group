@@ -1,7 +1,7 @@
 ---
 id: YOY_GROUP_SITE_AGENT
 app: apps/yoy-group
-version: "1.1.0"
+version: "1.1.1"
 status: "active"
 owner: YOY.Group
 
@@ -43,9 +43,9 @@ deliverables:
   pages:
     - /
     - /pillars
-    - /pillars/[slug]
-    - /index
-    - /index/[issue]
+    - /pillars/*            # explicit pillar pages (or migrate later to /pillars/[slug])
+    - /log
+    - /log/[issue]
     - /proof
     - /proof/[slug]
     - /playbooks
@@ -60,6 +60,7 @@ deliverables:
     - /contact
     - /privacy
     - /terms
+    - /andrey
   systems:
     - authority-first information hierarchy
     - internal linking discipline
@@ -68,8 +69,8 @@ deliverables:
 definition_of_done:
   - builds without warnings
   - no unused components
-  - no placeholder copy in production paths
-  - no dead routes
+  - no dead routes referenced by nav/sitemap
+  - no placeholder copy in production paths (minimal is fine; "coming soon" is not)
   - passes skills/aesthetic.md
   - passes skills/editorial.md
   - passes skills/authority.md
@@ -106,13 +107,13 @@ The site is organized around **authority primitives**, not funnels.
 - Acts as an index to deeper authority
 
 **/pillars**
-- Core beliefs and operating principles
+- Core primitives and operating beliefs
 - Stable over time
 - Rarely updated
 
-**/index**
+**/log**
 - Time-bound summaries (quarterly / annual)
-- What YOY is building, testing, or publishing *now*
+- What YOY is building, testing, or publishing now
 
 **/proof**
 - Build logs
@@ -121,13 +122,12 @@ The site is organized around **authority primitives**, not funnels.
 - No interpretation without data
 
 **/playbooks**
-- Public frameworks and templates
+- Public frameworks and constraints
 - Non-sensitive, reusable structures
 - Meant to be cited, not sold
 
 **/glossary**
 - Canonical definitions
-- Words YOY uses precisely
 - Language as infrastructure
 
 **/services**

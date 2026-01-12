@@ -1,11 +1,16 @@
 // app/services/creators/page.tsx
+import { buildMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Creators",
   description:
     "Creator operating systems: calendar → releases → commerce → relationship. Built to ship on schedule, without noise.",
-};
+  path: "/services/creators",
+  type: "website",
+  imagePath: "/og/og.png",
+});
 
 type Faq = { q: string; a: string };
 
@@ -121,7 +126,10 @@ function FaqSection({ faqs }: { faqs: readonly Faq[] }) {
 
       <ul className="space-y-3">
         {faqs.map((f) => (
-          <li key={f.q} className="rounded-lg border border-border/60 px-5 py-4">
+          <li
+            key={f.q}
+            className="rounded-lg border border-border/60 px-5 py-4"
+          >
             <details className="group">
               <summary className="cursor-pointer list-none text-sm font-medium tracking-tight">
                 <span className="inline-flex items-center justify-between gap-4">
@@ -159,9 +167,8 @@ export default function CreatorsServicesPage() {
         </h1>
 
         <p className="text-base leading-relaxed text-muted-foreground">
-          YOY installs creator operating systems. You keep making culture, while
-          the machine ships releases, captures relationships, and gets more
-          reliable over time.
+          YOY installs a release machine: calendar-driven drops, reliable
+          shipping, and a relationship layer that compounds beyond platforms.
         </p>
       </header>
 
@@ -188,7 +195,10 @@ export default function CreatorsServicesPage() {
 
         <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {CAPABILITIES.map((c) => (
-            <li key={c.title} className="rounded-lg border border-border/60 p-5">
+            <li
+              key={c.title}
+              className="rounded-lg border border-border/60 p-5"
+            >
               <p className="text-sm font-medium">{c.title}</p>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {c.desc}
@@ -240,7 +250,10 @@ export default function CreatorsServicesPage() {
 
         <ul className="space-y-6">
           {STARTER_ENGAGEMENTS.map((m) => (
-            <li key={m.title} className="rounded-lg border border-border/60 p-6">
+            <li
+              key={m.title}
+              className="rounded-lg border border-border/60 p-6"
+            >
               <div className="space-y-2">
                 <p className="text-sm font-medium">{m.title}</p>
                 <p className="text-sm leading-relaxed text-muted-foreground">
@@ -277,7 +290,7 @@ export default function CreatorsServicesPage() {
           </Link>
 
           <Link
-            href="/trust"
+            href="/operator"
             className="text-sm text-muted-foreground hover:text-foreground"
           >
             How we work →
@@ -325,7 +338,8 @@ export default function CreatorsServicesPage() {
       </section>
 
       <footer className="mt-16 text-xs text-muted-foreground">
-        Build the system first. Add optional layers only when they improve outcomes.
+        Build the system first. Add optional layers only when they improve
+        outcomes.
       </footer>
     </main>
   );

@@ -1,26 +1,62 @@
 // app/proof/page.tsx
+import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Proof",
   description:
     "Execution evidence: build logs, experiments, and operational artifacts. No claims without trace.",
-};
+  path: "/proof",
+  type: "website",
+  imagePath: "/og/og.png",
+});
+
+type Lane = "Retail Operator" | "Agentic Commerce Systems";
+type Tag = "Build" | "Experiment" | "Release" | "Governance";
 
 type ProofItem = {
   title: string;
   href: string;
   date: string; // YYYY-MM-DD
-  tag: "Build" | "Experiment" | "Release" | "Governance";
+  lane: Lane;
+  tag: Tag;
   desc: string;
 };
 
-const PROOF: ProofItem[] = [
+const PROOF: readonly ProofItem[] = [
+  // --- Retail Operator lane (ops-native) ---
+  {
+    title: "3PL transition — cutover plan + controls (post-Brexit pattern)",
+    href: "/proof/3pl-transition-cutover-controls",
+    date: "2026-01-08",
+    lane: "Retail Operator",
+    tag: "Governance",
+    desc: "Selection criteria, SLA framework, cutover controls, and weekly exception cadence. Anonymised, repeatable pattern.",
+  },
+  {
+    title: "Trading cadence install — weekly ritual + decision log",
+    href: "/proof/trading-cadence-install-decision-log",
+    date: "2026-01-08",
+    lane: "Retail Operator",
+    tag: "Build",
+    desc: "Agenda, owner map, decisions log, and KPI sheet to stop leakage and tighten accountability.",
+  },
+  {
+    title: "Store opening OS — timeline + staffing + opening-week KPIs",
+    href: "/proof/store-opening-os-readiness-pack",
+    date: "2026-01-08",
+    lane: "Retail Operator",
+    tag: "Build",
+    desc: "Pre-open checklist, staffing model, readiness score, and opening-week performance pack (public-safe).",
+  },
+
+  // --- Agentic Commerce Systems lane (your current technical proof) ---
   {
     title: "SKIN storefront — public deploy + hygiene pass",
     href: "/proof/skin-storefront-deploy-hygiene",
     date: "2025-12-20",
+    lane: "Agentic Commerce Systems",
     tag: "Release",
     desc: "Public deploy, env separation, and route hygiene. Reduced blast radius.",
   },
@@ -28,6 +64,7 @@ const PROOF: ProofItem[] = [
     title: "Supabase key hygiene — service role isolation",
     href: "/proof/supabase-key-hygiene-service-role-isolation",
     date: "2025-12-20",
+    lane: "Agentic Commerce Systems",
     tag: "Governance",
     desc: "Standardised server-only key naming, removed accidental exposure paths.",
   },
@@ -35,17 +72,28 @@ const PROOF: ProofItem[] = [
     title: "YOY.Group authority scaffold — shadcn + Tailwind baseline",
     href: "/proof/yoy-group-authority-scaffold",
     date: "2025-12-21",
+    lane: "Agentic Commerce Systems",
     tag: "Build",
     desc: "Minimal authority surface, strict constraints, fast routes, stable IA.",
   },
-];
+] as const;
 
-function TagPill({ tag }: { tag: ProofItem["tag"] }) {
+const SORTED_PROOF = [...PROOF].sort((a, b) => b.date.localeCompare(a.date));
+
+function Pill({ children }: { children: React.ReactNode }) {
   return (
     <span className="inline-flex items-center rounded-full border border-border/60 px-2 py-0.5 text-[11px] text-muted-foreground">
-      {tag}
+      {children}
     </span>
   );
+}
+
+function LanePill({ lane }: { lane: Lane }) {
+  return <Pill>{lane}</Pill>;
+}
+
+function TagPill({ tag }: { tag: Tag }) {
+  return <Pill>{tag}</Pill>;
 }
 
 export default function ProofIndexPage() {
@@ -72,7 +120,7 @@ export default function ProofIndexPage() {
         </div>
 
         <ul className="space-y-3">
-          {PROOF.sort((a, b) => (a.date < b.date ? 1 : -1)).map((item) => (
+          {SORTED_PROOF.map((item) => (
             <li key={item.href} className="group">
               <Link
                 href={item.href}
@@ -80,12 +128,14 @@ export default function ProofIndexPage() {
               >
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
                   <div className="space-y-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <h3 className="text-sm font-medium tracking-tight">
                         {item.title}
                       </h3>
+                      <LanePill lane={item.lane} />
                       <TagPill tag={item.tag} />
                     </div>
+
                     <p className="text-sm leading-relaxed text-muted-foreground">
                       {item.desc}
                     </p>

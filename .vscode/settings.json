@@ -1,14 +1,36 @@
 {
-  // --- Tailwind / CSS DX (THIS APP) ---
-  "tailwindCSS.experimental.configFile": "tailwind.config.js",
+  // ─────────────────────────────────────────────────────────────
+  // Tailwind / CSS DX (THIS APP)
+  // ─────────────────────────────────────────────────────────────
+  "tailwindCSS.experimental.configFile": "tailwind.config.ts",
   "tailwindCSS.includeLanguages": {
     "typescript": "javascript",
     "typescriptreact": "javascript"
   },
-  "files.associations": { "*.css": "tailwindcss" },
-  "editor.quickSuggestions": { "strings": true },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
   "tailwindCSS.emmetCompletions": true,
 
   // Silence @tailwind warnings from VS Code's CSS validator
-  "css.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore",
+
+  // ─────────────────────────────────────────────────────────────
+  // Deterministic formatting + lint fixes
+  // ─────────────────────────────────────────────────────────────
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // TypeScript hygiene
+  // ─────────────────────────────────────────────────────────────
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
