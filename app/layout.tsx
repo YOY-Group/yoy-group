@@ -1,11 +1,11 @@
 // app/layout.tsx
-import "./globals.css";
-import type { ReactNode } from "react";
-import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import PrimaryNav from "@/components/nav/PrimaryNav";
 import SiteFooter from "@/components/nav/SiteFooter";
 import { getSiteUrl } from "@/lib/site";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
+import type { ReactNode } from "react";
+import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,6 +31,16 @@ const SAME_AS = [
   "https://www.tiktok.com/@yoy_group",
   "https://github.com/YOY-Group",
 ];
+
+/**
+ * ─────────────────────────────────────────────────────────────
+ * Environment gates (Vercel)
+ * ─────────────────────────────────────────────────────────────
+ * VERCEL_ENV: 'production' | 'preview' | 'development'
+ * We hard-block indexing in Preview as a second safety lock (in addition to Vercel headers).
+ */
+const VERCEL_ENV = process.env.VERCEL_ENV;
+const IS_PREVIEW = VERCEL_ENV === "preview";
 
 /**
  * Absolute-safe OG image (never breaks even if metadataBase changes later)
@@ -74,23 +84,42 @@ export const metadata: Metadata = {
     canonical: "/",
   },
 
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
-  },
+  /**
+   * Robots gate:
+   * - Preview: noindex/nofollow (belt + suspenders vs accidental indexing)
+   * - Production: index/follow
+   */
+  robots: IS_PREVIEW
+    ? {
+        index: false,
+        follow: false,
+        googleBot: { index: false, follow: false },
+      }
+    : {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+          "max-video-preview": -1,
+        },
+      },
 
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any", type: "image/x-icon" },
-      { url: "/brand/y-glyph/favicon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/brand/y-glyph/favicon-16.png", sizes: "16x16", type: "image/png" },
+      {
+        url: "/brand/y-glyph/favicon-32.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
+      {
+        url: "/brand/y-glyph/favicon-16.png",
+        sizes: "16x16",
+        type: "image/png",
+      },
       {
         url: "/brand/y-glyph.svg",
         type: "image/svg+xml",

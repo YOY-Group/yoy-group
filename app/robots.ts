@@ -1,13 +1,26 @@
 // app/robots.ts
-import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/site";
+import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
+  const isProd = process.env.VERCEL_ENV === "production";
   const base = getSiteUrl().replace(/\/$/, "");
 
+  // PREVIEW + DEVELOPMENT: block everything and don't advertise sitemap
+  if (!isProd) {
+    return {
+      rules: [
+        {
+          userAgent: "*",
+          disallow: ["/"],
+        },
+      ],
+    };
+  }
+
+  // PRODUCTION: allow public surface, block non-public/internal surfaces
   return {
     rules: [
-      // Default: allow public surface, block non-public/internal surfaces
       {
         userAgent: "*",
         allow: ["/"],
@@ -18,8 +31,6 @@ export default function robots(): MetadataRoute.Robots {
           "/ai/",
           "/studio/",
           "/_next/",
-
-          // common non-public / noisy surfaces (safe even if they don't exist)
           "/admin/",
           "/dashboard/",
           "/internal/",
@@ -29,24 +40,11 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
 
-      // Optional: hard block obvious scraper patterns
-      // (Keeps your intent explicit without hurting normal indexing)
-      {
-        userAgent: "AhrefsBot",
-        disallow: ["/"],
-      },
-      {
-        userAgent: "SemrushBot",
-        disallow: ["/"],
-      },
-      {
-        userAgent: "MJ12bot",
-        disallow: ["/"],
-      },
-      {
-        userAgent: "DotBot",
-        disallow: ["/"],
-      },
+      // Hard-block obvious scrapers (optional but fine)
+      { userAgent: "AhrefsBot", disallow: ["/"] },
+      { userAgent: "SemrushBot", disallow: ["/"] },
+      { userAgent: "MJ12bot", disallow: ["/"] },
+      { userAgent: "DotBot", disallow: ["/"] },
     ],
     sitemap: `${base}/sitemap.xml`,
     host: base,

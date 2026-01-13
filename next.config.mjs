@@ -13,6 +13,24 @@ const nextConfig = {
       { source: "/index/:issue/", destination: "/log/:issue", permanent: true },
     ];
   },
+
+  /**
+   * Preview / Development: prevent indexing at the HTTP header level.
+   * Production: no extra headers.
+   */
+  async headers() {
+    const isProd = process.env.VERCEL_ENV === "production";
+    if (isProd) return [];
+
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
