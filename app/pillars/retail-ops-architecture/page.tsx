@@ -1,5 +1,16 @@
 // app/pillars/retail-ops-architecture/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Retail Operations Architecture",
+  description:
+    "The design of operating models that connect product, supply, data, and execution into a coherent system — built to adapt without constant reorganisation.",
+  path: "/pillars/retail-ops-architecture",
+  type: "article",
+  twitterCard: "summary_large_image",
+});
 
 export default function RetailOpsArchitecturePage() {
   return (
@@ -11,37 +22,36 @@ export default function RetailOpsArchitecturePage() {
         </h1>
 
         <p className="text-base leading-relaxed text-muted-foreground">
-          The design of operating models that connect product, supply,
-          data, and execution into a coherent system — built to adapt
-          without constant reorganisation.
+          The design of operating models that connect product, supply, data, and
+          execution into a coherent system — built to adapt without constant
+          reorganisation.
         </p>
       </header>
 
       <div className="my-16 h-px bg-border" />
 
       {/* Definition */}
-      <section className="space-y-6">
+      <section className="space-y-6" aria-label="Definition">
         <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Definition
         </h2>
 
         <p className="text-sm leading-relaxed">
-          Retail Operations Architecture is the practice of structuring
-          how work actually happens: how decisions are made, how inventory
-          flows, how data informs action, and how teams execute without
-          friction.
+          Retail Operations Architecture is the practice of structuring how work
+          actually happens: how decisions are made, how inventory flows, how
+          data informs action, and how teams execute without friction.
         </p>
 
         <p className="text-sm leading-relaxed text-muted-foreground">
-          It replaces ad-hoc process with deliberate structure — enabling
-          speed without chaos and scale without brittleness.
+          It replaces ad-hoc process with deliberate structure — enabling speed
+          without chaos and scale without brittleness.
         </p>
       </section>
 
       <div className="my-16 h-px bg-border" />
 
       {/* System Layers */}
-      <section className="space-y-6">
+      <section className="space-y-6" aria-label="System layers">
         <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           System Layers
         </h2>
@@ -56,8 +66,8 @@ export default function RetailOpsArchitecturePage() {
             production, inventory, and fulfillment constraints.
           </li>
           <li>
-            <span className="font-medium">Data layer</span> — signals,
-            metrics, and feedback loops that drive decisions.
+            <span className="font-medium">Data layer</span> — signals, metrics,
+            and feedback loops that drive decisions.
           </li>
           <li>
             <span className="font-medium">Execution layer</span> — routines,
@@ -69,7 +79,7 @@ export default function RetailOpsArchitecturePage() {
       <div className="my-16 h-px bg-border" />
 
       {/* What this prevents */}
-      <section className="space-y-6">
+      <section className="space-y-6" aria-label="What this prevents">
         <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           What This Prevents
         </h2>

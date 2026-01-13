@@ -2,105 +2,50 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
-type Term = {
-  slug: string;
-  title: string;
-  short: string;
-  definition: string;
-  notes?: string[];
-  related?: { title: string; href: string }[];
-  updated?: string;
-};
-
-const TERMS: Term[] = [
-  {
-    slug: "agentic-commerce",
-    title: "Agentic Commerce",
-    short:
-      "Commerce systems designed to operate autonomously via agents, not manual workflows.",
-    definition:
-      "Agentic Commerce treats execution as a system: agents handle routine decisions, orchestration, and exception routing. The human defines goals, constraints, and review points; the system runs the loop and produces traceable outcomes.",
-    notes: [
-      "Automate decisions only after you can audit them.",
-      "Prefer small agents with strict scopes over one general agent.",
-      "Human-in-the-loop is a feature, not a failure mode.",
-    ],
-    related: [
-      { title: "Pillars", href: "/pillars" },
-      { title: "Proof", href: "/proof" },
-      { title: "Trust", href: "/trust" },
-    ],
-    updated: "2026-01-07",
-  },
-  {
-    slug: "authority-layer",
-    title: "Authority Layer",
-    short: "The public surface where claims must be earned and verifiable.",
-    definition:
-      "The Authority Layer is YOY.Group’s public-facing library. Its purpose is not marketing; it is a durable record of primitives, decisions, and proof. Anything published here must survive scrutiny, remain readable over time, and avoid claims without evidence.",
-    notes: [
-      "Prefer structure over persuasion.",
-      "Publish only what can be defended without context.",
-      "When uncertain: remove.",
-    ],
-    related: [
-      { title: "Proof", href: "/proof" },
-      { title: "Pillars", href: "/pillars" },
-      { title: "Trust", href: "/trust" },
-    ],
-    updated: "2026-01-07",
-  },
-  {
-    slug: "culture-commerce",
-    title: "Culture–Commerce",
-    short: "The translation of cultural signal into durable commercial systems.",
-    definition:
-      "Culture–Commerce is the operating discipline of converting signal (taste, scenes, identity, rituals) into repeatable product, distribution, and retention loops—without collapsing into hype. The output is legible product and compounding demand.",
-    notes: [
-      "Signal must become structure (offers, drops, rituals, repeat loops).",
-      "Legibility beats attention over time.",
-      "If it can’t be operationalised, it’s just commentary.",
-    ],
-    related: [
-      { title: "Authority Layer", href: "/glossary/authority-layer" },
-      { title: "Proof", href: "/proof" },
-      { title: "Trust", href: "/trust" },
-    ],
-    updated: "2026-01-07",
-  },
-];
-
-function getTerm(slug: string) {
-  return TERMS.find((t) => t.slug === slug);
-}
-
-export const dynamic = "force-static";
-
-export function generateStaticParams() {
-  return TERMS.map((t) => ({ term: t.slug }));
-}
+import { buildMetadata } from "@/lib/seo";
+import { GLOSSARY_TERMS } from "../terms";
 
 type PageProps = {
   params: Promise<{ term: string }>;
 };
 
+function getTerm(slug: string) {
+  return GLOSSARY_TERMS.find((t) => t.slug === slug);
+}
+
+export const dynamic = "force-static";
+
+export function generateStaticParams() {
+  return GLOSSARY_TERMS.map((t) => ({ term: t.slug }));
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { term: slug } = await params;
   const term = getTerm(slug);
 
-  if (!term) return { title: "Glossary · YOY.Group" };
+  // keep "not found" metadata safe + canonical
+  if (!term) {
+    return buildMetadata({
+      title: "Glossary",
+      description:
+        "Canonical definitions used by YOY.Group. Language as infrastructure.",
+      path: "/glossary",
+      type: "website",
+      imagePath: "/og/og.png",
+    });
+  }
 
   const title = `${term.title} · Glossary`;
   const description =
     term.short.length > 160 ? `${term.short.slice(0, 157)}…` : term.short;
 
-  return {
+  return buildMetadata({
     title,
     description,
-    openGraph: { title, description, type: "article" },
-    twitter: { card: "summary", title, description },
-  };
+    path: `/glossary/${term.slug}`,
+    type: "article",
+    imagePath: "/og/og.png",
+  });
 }
 
 export default async function GlossaryTermPage({ params }: PageProps) {
@@ -144,8 +89,8 @@ export default async function GlossaryTermPage({ params }: PageProps) {
               Notes
             </h2>
             <ul className="mt-6 space-y-3 text-sm text-foreground">
-              {term.notes.map((n, idx) => (
-                <li key={idx} className="leading-relaxed">
+              {term.notes.map((n) => (
+                <li key={n} className="leading-relaxed">
                   {n}
                 </li>
               ))}
@@ -166,7 +111,7 @@ export default async function GlossaryTermPage({ params }: PageProps) {
                 <li key={r.href}>
                   <Link
                     href={r.href}
-                    className="rounded-md border border-border/60 px-3 py-1.5 text-xs text-muted-foreground hover:border-border hover:text-foreground transition-colors"
+                    className="rounded-md border border-border/60 px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:border-border hover:text-foreground"
                   >
                     {r.title} →
                   </Link>

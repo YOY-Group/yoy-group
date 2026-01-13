@@ -1,43 +1,73 @@
 // app/services/retail/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata = {
+/**
+ * SEO: page-level metadata to prevent inheriting layout canonical (/)
+ * Layout provides `metadataBase`, so we can use path-based canonicals + relative OG images.
+ */
+export const metadata: Metadata = {
   title: "Retail",
   description:
-    "Retail operating model design and execution cadence for founder-led brands and operators. Lean, auditable, repeatable.",
+    "Retail operating model design, trading cadence, and buying/merch discipline for founder-led brands. Lean, auditable, repeatable.",
+  alternates: {
+    canonical: "/services/retail",
+  },
+  openGraph: {
+    title: "Retail",
+    description:
+      "Retail operating model design, trading cadence, and buying/merch discipline for founder-led brands. Lean, auditable, repeatable.",
+    url: "/services/retail",
+    images: [
+      {
+        url: "/og/og.png",
+        width: 1200,
+        height: 630,
+        alt: "YOY.Group — Retail",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Retail",
+    description:
+      "Retail operating model design, trading cadence, and buying/merch discipline for founder-led brands. Lean, auditable, repeatable.",
+    images: ["/og/og.png"],
+  },
 };
 
 type Faq = { q: string; a: string };
 
 const OUTCOMES = [
   "A real weekly trading cadence (decisions, owners, deadlines)",
-  "Fewer operational leaks (stock, handoffs, missing information)",
+  "Cleaner margin and availability control (range, pricing, stock flow)",
+  "Fewer operational leaks (handoffs, exceptions, missing information)",
   "A roadmap that ships — with explicit risk gates",
 ] as const;
 
 const MODULES = [
   {
     title: "Operating model",
-    desc: "Responsibility map, decision rights, and the minimum set of rituals to keep execution tight.",
+    desc: "Responsibility map, decision rights, and the minimum rituals to keep execution tight across channels.",
   },
   {
     title: "Trading cadence",
-    desc: "Weekly and monthly rhythm: what gets reviewed, what gets decided, and what gets shipped.",
+    desc: "Weekly and monthly rhythm: what gets reviewed, what gets decided, and how actions get closed.",
   },
   {
-    title: "Commercial visibility",
-    desc: "The minimum measurements and signals you need to run the business without guessing.",
+    title: "Buying & Merchandising engine",
+    desc: "Range plan, pricing architecture, option counts, intake vs sales, stock cover, and the KPI set that stops leakage early.",
   },
   {
-    title: "Execution hardening",
-    desc: "Guardrails, checklists, failure modes, and what happens when it breaks.",
+    title: "Supply chain + 3PL discipline",
+    desc: "Critical path, lead-time control, service guardrails, and exception rhythms that keep customer promise stable.",
   },
 ] as const;
 
 const GOOD_FIT = [
   "Founder-led brand with 1–15 operators",
   "Retail team that needs structure without enterprise overhead",
-  "Partners supporting retail clients (franchise / advisory / platform) who need a repeatable playbook",
+  "Partners supporting retail clients (franchise / advisory / platform) who need a repeatable operating kit",
 ] as const;
 
 const NOT_A_FIT = [
@@ -52,6 +82,7 @@ const ENGAGEMENTS = [
     desc: "A short assessment that ends in a plan you can run.",
     includes: [
       "Current-state map (people, workflows, stack)",
+      "Commercial engine scan (range, price, stock flow)",
       "Primary bottlenecks + risk register",
       "30-day action plan with gates and owners",
     ],
@@ -60,8 +91,9 @@ const ENGAGEMENTS = [
     title: "Build sprint",
     desc: "Implement one or two high-leverage modules with guardrails.",
     includes: [
-      "Cadence installed + accountability loop",
-      "One critical workflow hardened end-to-end",
+      "Cadence installed + decisions log + owners",
+      "One critical workflow hardened end-to-end (e.g. stock, trading, handoffs)",
+      "A minimal KPI sheet the team actually uses",
       "Handoff notes and operating discipline",
     ],
   },
@@ -72,6 +104,7 @@ const ENGAGEMENTS = [
       "Weekly operating review + decisions log",
       "Incremental hardening and iteration",
       "Change log: what moved, what broke, what improved",
+      "Proof links attached as work ships",
     ],
   },
 ] as const;
@@ -86,19 +119,23 @@ const READINESS = {
 const retailFaqs: readonly Faq[] = [
   {
     q: "Who is this for?",
-    a: "Founder-led consumer brands that want a tighter operating model: clearer range, cleaner margins, faster cycles, fewer surprises.",
+    a: "Founder-led consumer brands that want a tighter operating model: clearer range decisions, cleaner margins, faster cycles, fewer surprises.",
   },
   {
     q: "Who is this not for?",
-    a: "Teams looking for a slide deck or generic transformation theatre. We only ship what can be implemented and measured.",
+    a: "Teams looking for a slide deck or generic transformation theatre. We only ship what can be implemented, measured, and maintained.",
   },
   {
     q: "What does success look like?",
-    a: "Shorter lead times, fewer stock problems, higher conversion, and a system your team can run without heroics.",
+    a: "A working trading rhythm, fewer stock problems, clearer margin control, higher conversion, and a system your team can run without heroics.",
   },
   {
     q: "What do you typically change first?",
-    a: "Range logic + workflow bottlenecks. Then instrumentation: what’s true, what’s not, and what is costing you money.",
+    a: "Decision cadence + the commercial engine: range logic, pricing rules, and stock flow. Then instrumentation: what’s true, what’s not, and what is costing you money.",
+  },
+  {
+    q: "Do you cover supply chain and 3PL?",
+    a: "Yes — but only as part of the end-to-end system. Lead times, service levels, exception handling, and handoffs are designed to protect trading and customer promise.",
   },
   {
     q: "What timeline should I expect?",
@@ -117,7 +154,10 @@ function FaqSection({ faqs }: { faqs: readonly Faq[] }) {
 
       <ul className="space-y-3">
         {faqs.map((f) => (
-          <li key={f.q} className="rounded-lg border border-border/60 px-5 py-4">
+          <li
+            key={f.q}
+            className="rounded-lg border border-border/60 px-5 py-4"
+          >
             <details className="group">
               <summary className="cursor-pointer list-none text-sm font-medium tracking-tight">
                 <span className="inline-flex items-center justify-between gap-4">
@@ -155,9 +195,14 @@ export default function RetailServicesPage() {
         </h1>
 
         <p className="text-base leading-relaxed text-muted-foreground">
-          For brands that need execution control: clear owners, clean rhythm, and
-          a system that survives reality. Calm surface. Hard discipline
-          underneath.
+          For brands that need execution control: clear owners, clean rhythm,
+          and a commercial engine that survives reality. Calm surface. Hard
+          discipline underneath.
+        </p>
+
+        <p className="text-xs leading-relaxed text-muted-foreground">
+          Built from operator work across stores, franchise, and multi-channel —
+          with buying/merch discipline and measured execution (no theatre).
         </p>
       </header>
 
@@ -185,7 +230,10 @@ export default function RetailServicesPage() {
 
         <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {MODULES.map((m) => (
-            <li key={m.title} className="rounded-lg border border-border/60 p-5">
+            <li
+              key={m.title}
+              className="rounded-lg border border-border/60 p-5"
+            >
               <p className="text-sm font-medium">{m.title}</p>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {m.desc}
@@ -238,7 +286,10 @@ export default function RetailServicesPage() {
 
         <ul className="space-y-6">
           {ENGAGEMENTS.map((m) => (
-            <li key={m.title} className="rounded-lg border border-border/60 p-6">
+            <li
+              key={m.title}
+              className="rounded-lg border border-border/60 p-6"
+            >
               <div className="space-y-2">
                 <p className="text-sm font-medium">{m.title}</p>
                 <p className="text-sm leading-relaxed text-muted-foreground">
@@ -259,7 +310,9 @@ export default function RetailServicesPage() {
 
       {/* Readiness */}
       <section className="space-y-4" aria-label="Readiness">
-        <h2 className="text-sm font-medium tracking-tight">{READINESS.title}</h2>
+        <h2 className="text-sm font-medium tracking-tight">
+          {READINESS.title}
+        </h2>
         <p className="text-sm leading-relaxed text-muted-foreground">
           {READINESS.desc}
         </p>
@@ -273,10 +326,10 @@ export default function RetailServicesPage() {
           </Link>
 
           <Link
-            href="/contact"
+            href="/operator"
             className="text-sm text-muted-foreground hover:text-foreground"
           >
-            Or contact →
+            How we work →
           </Link>
         </div>
       </section>

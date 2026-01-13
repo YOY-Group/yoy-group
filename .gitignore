@@ -31,3 +31,7 @@ coverage/
 
 # Misc
 *.log
+
+.npmrc
+.ops/
+.vscode/extentions.json

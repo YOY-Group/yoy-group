@@ -1,15 +1,19 @@
 // app/log/page.tsx
+import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export const metadata: Metadata = {
-  title: "Log · YOY.Group",
+export const metadata: Metadata = buildMetadata({
+  title: "Log",
   description:
     "Time-bound logs (quarterly / annual) documenting what YOY.Group ships, proves, and updates.",
-};
+  path: "/log",
+  type: "website",
+  imagePath: "/og/og.png",
+});
 
 const LAST_UPDATED = "2026-01-05";
 
@@ -43,8 +47,8 @@ export default function LogPage() {
         <p className="text-base leading-relaxed text-muted-foreground">
           This is a public log of YOY.Group’s operating work.
           <br />
-          We publish only what can be verified: what changed, why it changed, and
-          where the proof lives.
+          We publish only what can be verified: what changed, why it changed,
+          and where the proof lives.
         </p>
 
         <div className="pt-2 text-xs text-muted-foreground">

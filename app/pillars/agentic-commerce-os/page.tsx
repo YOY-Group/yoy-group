@@ -1,5 +1,16 @@
 // app/pillars/agentic-commerce-os/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Agentic Commerce OS",
+  description:
+    "A commerce operating system where execution, coordination, and decision-making are handled by autonomous agents under explicit governance.",
+  path: "/pillars/agentic-commerce-os",
+  type: "article",
+  twitterCard: "summary_large_image",
+});
 
 export default function AgenticCommerceOSPage() {
   return (
@@ -20,7 +31,7 @@ export default function AgenticCommerceOSPage() {
       <div className="my-16 h-px bg-border" />
 
       {/* Definition */}
-      <section className="space-y-6">
+      <section className="space-y-6" aria-label="Definition">
         <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Definition
         </h2>
@@ -42,7 +53,7 @@ export default function AgenticCommerceOSPage() {
       <div className="my-16 h-px bg-border" />
 
       {/* Components */}
-      <section className="space-y-6">
+      <section className="space-y-6" aria-label="Core components">
         <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Core Components
         </h2>
@@ -71,7 +82,7 @@ export default function AgenticCommerceOSPage() {
       <div className="my-16 h-px bg-border" />
 
       {/* Non-goals */}
-      <section className="space-y-6">
+      <section className="space-y-6" aria-label="Non-goals">
         <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Non-Goals
         </h2>

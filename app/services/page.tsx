@@ -1,9 +1,11 @@
 // app/services/page.tsx
+import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 
 type Lens = {
   title: string;
   href: string;
+  readinessHref: string;
   desc: string;
   outcomes: string[];
   forWho: string[];
@@ -21,11 +23,24 @@ type Mode = {
   includes: string[];
 };
 
-const LENSES: Lens[] = [
+const TITLE = "Services";
+const DESCRIPTION =
+  "Three service lenses — Retail, Creators, Rails — delivered as calm, execution-first systems. Proof over promises.";
+
+export const metadata = buildMetadata({
+  title: TITLE,
+  description: DESCRIPTION,
+  path: "/services",
+  type: "website",
+  imagePath: "/og/og.png",
+});
+
+const LENSES: readonly Lens[] = [
   {
     title: "Retail",
     href: "/services/retail",
-    desc: "Operating models and execution cadence for brands that need clarity, speed, and control—without enterprise overhead.",
+    readinessHref: "/services/retail/readiness",
+    desc: "Operating models and execution cadence for brands that need clarity, speed, and control — without enterprise overhead.",
     outcomes: [
       "A weekly trading rhythm with real accountability",
       "Fewer operational leaks (stock, data, handoffs)",
@@ -45,7 +60,8 @@ const LENSES: Lens[] = [
   {
     title: "Creators",
     href: "/services/creators",
-    desc: "Turn calendar, content, and audience into a repeatable merch system—drops, access, and retention tied to real moments.",
+    readinessHref: "/services/creators/readiness",
+    desc: "Turn calendar, content, and audience into a repeatable merch system — drops, access, and retention tied to real moments.",
     outcomes: [
       "Merch cadence aligned to events and releases",
       "Better retention via owned channel + light CRM",
@@ -65,7 +81,8 @@ const LENSES: Lens[] = [
   {
     title: "Rails",
     href: "/services/rails",
-    desc: "Web2-first, Web3-ready rails for commerce and community—identity, access, provenance, and automation on Telegram-friendly infrastructure.",
+    readinessHref: "/services/rails/readiness",
+    desc: "Web2-first, Web3-ready rails for commerce and community — identity, access, provenance, and automation on Telegram-friendly infrastructure.",
     outcomes: [
       "A safe bridge from existing stack into rails",
       "Clear constraints: permissions, audit, failure modes",
@@ -82,16 +99,16 @@ const LENSES: Lens[] = [
       "Anything that can’t be governed or audited",
     ],
   },
-];
+] as const;
 
-const MODULES: Module[] = [
+const MODULES: readonly Module[] = [
   {
     title: "Cadence",
     desc: "Weekly rhythm, decision points, and responsibility mapping. The machine runs when the schedule is real.",
   },
   {
-    title: "Commerce",
-    desc: "Product, pricing, inventory signals, and execution flow. Less guesswork, fewer leaks.",
+    title: "Buying & Merchandising",
+    desc: "Range, pricing, intake, and inventory signals. Less guesswork, fewer leaks.",
   },
   {
     title: "Retention",
@@ -105,9 +122,9 @@ const MODULES: Module[] = [
     title: "Rails",
     desc: "Identity, access, provenance, and automation boundaries. Web2-first, Web3-optional.",
   },
-];
+] as const;
 
-const MODES: Mode[] = [
+const MODES: readonly Mode[] = [
   {
     title: "Diagnostic",
     desc: "A short, bounded assessment that ends in a clear plan.",
@@ -135,19 +152,13 @@ const MODES: Mode[] = [
       "Proof logging + iteration discipline",
     ],
   },
-];
-
-export const metadata = {
-  title: "Services",
-  description:
-    "Three service lenses — Retail, Creators, Rails — delivered as calm, execution-first systems. Proof over promises.",
-};
+] as const;
 
 export default function ServicesPage() {
   return (
     <main className="py-16 md:py-24">
       {/* Header */}
-      <header className="mx-auto max-w-3xl space-y-4">
+      <header className="mx-auto max-w-4xl space-y-4 px-6">
         <p className="text-xs uppercase tracking-widest text-muted-foreground">
           Services
         </p>
@@ -163,14 +174,40 @@ export default function ServicesPage() {
         </p>
 
         <p className="mt-3 text-xs text-muted-foreground">
-          Services delivered by <span className="font-medium text-foreground">YOY.AI Studio</span> — a division of YOY.Group.
+          Services delivered by{" "}
+          <span className="font-medium text-foreground">YOY.AI Studio</span> — a
+          division of YOY.Group.
         </p>
+
+        <div className="flex flex-wrap items-center gap-3 pt-2">
+          <Link
+            href="/proof"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Proof →
+          </Link>
+          <Link
+            href="/pillars"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Pillars →
+          </Link>
+          <Link
+            href="/playbooks"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Playbooks →
+          </Link>
+        </div>
       </header>
 
-      <div className="mx-auto my-12 h-px max-w-3xl bg-border" />
+      <div className="mx-auto my-12 h-px max-w-4xl bg-border" />
 
       {/* How this fits together */}
-      <section className="mx-auto max-w-3xl space-y-6" aria-label="How this fits together">
+      <section
+        className="mx-auto max-w-4xl space-y-6 px-6"
+        aria-label="How this fits together"
+      >
         <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           How this fits together
         </h2>
@@ -180,19 +217,12 @@ export default function ServicesPage() {
             <dt className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Retail
             </dt>
-            < dd className="text-muted-foreground">
-              <span className="font-medium text-foreground">Decision layer:</span>{" "}
-              who owns what, what gets reviewed weekly, and how commercial reality stays visible.
-            </dd>
-          </div>
-
-          <div className="grid grid-cols-1 gap-2 md:grid-cols-[92px_1fr] md:gap-6">
-            <dt className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-              Rails
-            </dt>
             <dd className="text-muted-foreground">
-              <span className="font-medium text-foreground">Execution layer:</span>{" "}
-              events, messaging, access, and proof so the system behaves predictably under load.
+              <span className="font-medium text-foreground">
+                Decision layer:
+              </span>{" "}
+              who owns what, what gets reviewed weekly, and how commercial
+              reality stays visible.
             </dd>
           </div>
 
@@ -201,53 +231,88 @@ export default function ServicesPage() {
               Creators
             </dt>
             <dd className="text-muted-foreground">
-              <span className="font-medium text-foreground">Culture-led revenue:</span>{" "}
-              calendar-driven releases and relationship capture so output compounds without chaos.
+              <span className="font-medium text-foreground">
+                Culture-led revenue:
+              </span>{" "}
+              calendar-driven drops and merch systems, with relationship capture
+              so output compounds without chaos.
+            </dd>
+          </div>
+
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-[92px_1fr] md:gap-6">
+            <dt className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Rails
+            </dt>
+            <dd className="text-muted-foreground">
+              <span className="font-medium text-foreground">
+                Execution layer:
+              </span>{" "}
+              events, messaging, access, and proof so the system behaves
+              predictably under load.
             </dd>
           </div>
         </dl>
 
         <p className="text-sm leading-relaxed text-muted-foreground">
-          Most teams start with the layer that is currently breaking their week. Each service works
-          standalone, and connects cleanly if you later need the full stack.
+          Most teams start with the layer that is currently breaking their week.
+          Each service works standalone, and connects cleanly if you later need
+          the full stack.
         </p>
       </section>
 
-      <div className="mx-auto my-12 h-px max-w-3xl bg-border" />
-      
+      <div className="mx-auto my-12 h-px max-w-4xl bg-border" />
+
       {/* Lenses */}
-      <section className="mx-auto max-w-5xl space-y-6" aria-label="Service lenses">
+      <section
+        className="mx-auto max-w-5xl space-y-6 px-6"
+        aria-label="Service lenses"
+      >
         <div className="flex items-baseline justify-between">
           <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Lenses
           </h2>
           <Link
-            href="/proof"
+            href="/contact"
             className="text-xs text-muted-foreground hover:text-foreground"
           >
-            Proof →
+            Intake →
           </Link>
         </div>
 
         <ul className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {LENSES.map((s) => (
             <li key={s.href} className="group">
-              <Link
-                href={s.href}
-                className="block h-full space-y-4 rounded-lg border border-border/60 p-5 transition-colors hover:border-border"
-              >
+              <div className="h-full space-y-4 rounded-lg border border-border/60 p-5 transition-colors hover:border-border">
                 <div className="flex items-baseline justify-between gap-3">
                   <h3 className="text-sm font-medium tracking-tight">
                     {s.title}
                   </h3>
-                  <span className="text-xs text-muted-foreground transition-colors group-hover:text-foreground/80">
+                  <Link
+                    href={s.href}
+                    className="text-xs text-muted-foreground transition-colors group-hover:text-foreground/80"
+                  >
                     View →
-                  </span>
+                  </Link>
                 </div>
 
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   {s.desc}
                 </p>
+
+                <div className="flex flex-wrap items-center gap-3 pt-1">
+                  <Link
+                    href={s.readinessHref}
+                    className="text-sm underline underline-offset-4 hover:opacity-80"
+                  >
+                    Readiness score →
+                  </Link>
+                  <Link
+                    href="/proof"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Proof →
+                  </Link>
+                </div>
 
                 <div className="space-y-3">
                   <div>
@@ -283,16 +348,19 @@ export default function ServicesPage() {
                     </ul>
                   </div>
                 </div>
-              </Link>
+              </div>
             </li>
           ))}
         </ul>
       </section>
 
-      <div className="mx-auto my-16 h-px max-w-3xl bg-border" />
+      <div className="mx-auto my-16 h-px max-w-4xl bg-border" />
 
       {/* Modules */}
-      <section className="mx-auto max-w-3xl space-y-6" aria-label="Delivery modules">
+      <section
+        className="mx-auto max-w-4xl space-y-6 px-6"
+        aria-label="Delivery modules"
+      >
         <h2 className="text-sm font-medium tracking-tight">Modules</h2>
         <p className="text-sm leading-relaxed text-muted-foreground">
           Engagements are assembled from a small set of modules. This keeps the
@@ -301,7 +369,10 @@ export default function ServicesPage() {
 
         <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {MODULES.map((m) => (
-            <li key={m.title} className="rounded-lg border border-border/60 p-5">
+            <li
+              key={m.title}
+              className="rounded-lg border border-border/60 p-5"
+            >
               <p className="text-sm font-medium">{m.title}</p>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {m.desc}
@@ -314,7 +385,10 @@ export default function ServicesPage() {
       <div className="mx-auto my-16 h-px max-w-3xl bg-border" />
 
       {/* Modes */}
-      <section className="mx-auto max-w-3xl space-y-6" aria-label="Engagement modes">
+      <section
+        className="mx-auto max-w-3xl space-y-6 px-6"
+        aria-label="Engagement modes"
+      >
         <h2 className="text-sm font-medium tracking-tight">Engagement modes</h2>
         <p className="text-sm leading-relaxed text-muted-foreground">
           Three ways to start. All are timeboxed. All end in something real.
@@ -322,7 +396,10 @@ export default function ServicesPage() {
 
         <ul className="space-y-6">
           {MODES.map((m) => (
-            <li key={m.title} className="rounded-lg border border-border/60 p-6">
+            <li
+              key={m.title}
+              className="rounded-lg border border-border/60 p-6"
+            >
               <div className="space-y-2">
                 <p className="text-sm font-medium">{m.title}</p>
                 <p className="text-sm leading-relaxed text-muted-foreground">
@@ -342,7 +419,7 @@ export default function ServicesPage() {
       <div className="mx-auto my-16 h-px max-w-3xl bg-border" />
 
       {/* Intake */}
-      <section className="mx-auto max-w-3xl space-y-4" aria-label="Intake">
+      <section className="mx-auto max-w-3xl space-y-4 px-6" aria-label="Intake">
         <h2 className="text-sm font-medium tracking-tight">Intake</h2>
         <p className="text-sm leading-relaxed text-muted-foreground">
           If you want to explore fit, send a short note: current stack, primary
@@ -356,10 +433,9 @@ export default function ServicesPage() {
           >
             Contact →
           </Link>
-
           <Link
             href="/trust"
-            className="text-sm text-muted-foreground hover:text-foreground"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             Trust & disclosures →
           </Link>
