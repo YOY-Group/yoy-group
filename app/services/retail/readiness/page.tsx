@@ -1,11 +1,16 @@
 // app/services/retail/readiness/page.tsx
+import { buildMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Retail Readiness",
   description:
     "A short readiness check for retail operations. Clear inputs, clear next step. No decks by default.",
-};
+  path: "/services/retail/readiness",
+  type: "article",
+  imagePath: "/og/og.png",
+});
 
 const CHECKLIST = [
   "Trading cadence: what gets reviewed, decided, and shipped each week",
