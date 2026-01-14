@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
   const isProd = process.env.VERCEL_ENV === "production";
   const base = getSiteUrl().replace(/\/$/, "");
 
-  // PREVIEW + DEVELOPMENT: block everything and don't advertise sitemap
+  // PREVIEW + DEVELOPMENT: block everything
   if (!isProd) {
     return {
       rules: [
@@ -18,34 +18,39 @@ export default function robots(): MetadataRoute.Robots {
     };
   }
 
-  // PRODUCTION: allow public surface, block non-public/internal surfaces
+  // PRODUCTION
   return {
     rules: [
       {
         userAgent: "*",
-        allow: ["/"],
+
+        // ✅ Explicitly allow Next.js assets
+        allow: ["/", "/_next/static/", "/_next/image/"],
+
+        // ❌ Block non-public / internal surfaces
         disallow: [
           "/api/",
           "/n8n/",
           "/dev/",
           "/ai/",
           "/studio/",
-          "/_next/",
           "/admin/",
           "/dashboard/",
           "/internal/",
           "/private/",
           "/preview/",
           "/draft/",
+          "/cdn-cgi/", // Cloudflare email obfuscation noise
         ],
       },
 
-      // Hard-block obvious scrapers (optional but fine)
+      // Optional: hard-block heavy SEO scrapers
       { userAgent: "AhrefsBot", disallow: ["/"] },
       { userAgent: "SemrushBot", disallow: ["/"] },
       { userAgent: "MJ12bot", disallow: ["/"] },
       { userAgent: "DotBot", disallow: ["/"] },
     ],
+
     sitemap: `${base}/sitemap.xml`,
     host: base,
   };
