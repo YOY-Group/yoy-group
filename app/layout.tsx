@@ -193,7 +193,6 @@ function JsonLdOrganization() {
   return (
     <script
       type="application/ld+json"
-      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
     />
   );
@@ -220,7 +219,6 @@ function JsonLdWebsite() {
   return (
     <script
       type="application/ld+json"
-      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
     />
   );
@@ -237,7 +235,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         {/* Inject theme class early (enables Tailwind `dark:` + allows logo swaps) */}
         <script
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html: `
 (function() {
