@@ -41,7 +41,11 @@ export default function PageStub({
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-24">
-      <header className="space-y-4" aria-labelledby={titleId} aria-describedby={descId}>
+      <header
+        className="space-y-4"
+        aria-labelledby={titleId}
+        aria-describedby={descId}
+      >
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <h1 id={titleId} className="text-3xl font-semibold tracking-tight">
             {title}
@@ -60,7 +64,10 @@ export default function PageStub({
           </div>
         </div>
 
-        <p id={descId} className="text-base leading-relaxed text-muted-foreground">
+        <p
+          id={descId}
+          className="text-base leading-relaxed text-muted-foreground"
+        >
           {description}
         </p>
       </header>
@@ -94,7 +101,7 @@ export default function PageStub({
       </section>
 
       <footer className="mt-16 text-xs text-muted-foreground">
-        <Link href={backHref} className="hover:text-foreground transition-colors">
+        <Link href={backHref} className={LINK_CLASS}>
           ← {backLabel}
         </Link>
       </footer>
