@@ -1,26 +1,28 @@
 // app/sitemap.ts
-import {
-  GLOSSARY_TERMS,
-  LOG_ISSUES,
-  PLAYBOOK_SLUGS,
-  PROOF_SLUGS,
-} from "@/lib/content";
 import { getSiteUrl } from "@/lib/site";
 import type { MetadataRoute } from "next";
+
+// Legacy sources remain until PR3-B/C migrates them too
+import { GLOSSARY_TERMS, LOG_ISSUES, PLAYBOOK_SLUGS } from "@/lib/content";
+
+// NEW: proof source of truth (markdown)
+import { loadAllProofArtifacts } from "@/lib/content/proof-loader";
 
 /**
  * Sitemap is an Authority Layer artifact:
  * - Single canonical base URL
- * - Single source of truth for dynamic slugs (lib/content)
+ * - Dynamic slugs must match the *actual* content source of truth
  * - No duplicated arrays inside this file
+ *
+ * Current state (PR3-A):
+ * - Proof routes come from markdown (content/proof/*.md)
+ * - Others remain on legacy arrays until migrated
  */
 
-// Canonical site URL (single source of truth)
 const SITE_URL = getSiteUrl().replace(/\/$/, "");
 
-// Build absolute URLs safely
-function u(path: string) {
-  return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+function u(p: string) {
+  return `${SITE_URL}${p.startsWith("/") ? p : `/${p}`}`;
 }
 
 type ChangeFreq = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
@@ -30,15 +32,14 @@ function route(
   path: string,
   now: Date,
   changeFrequency: ChangeFreq,
-  priority: RouteItem["priority"]
+  priority: RouteItem["priority"],
 ): RouteItem {
   return { url: u(path), lastModified: now, changeFrequency, priority };
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  // Static surfaces (must exist)
   const routes: MetadataRoute.Sitemap = [
     // ── Core authority surfaces ───────────────────────────────
     route("/", now, "weekly", 1.0),
@@ -88,8 +89,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     routes.push(route(`/log/${issue}`, now, "monthly", 0.7));
   }
 
-  for (const slug of PROOF_SLUGS) {
-    routes.push(route(`/proof/${slug}`, now, "monthly", 0.6));
+  // ✅ Proof slugs now come from markdown (source of truth)
+  const proofs = await loadAllProofArtifacts();
+  for (const p of proofs) {
+    routes.push(route(`/proof/${p.slug}`, now, "monthly", 0.6));
   }
 
   for (const slug of PLAYBOOK_SLUGS) {

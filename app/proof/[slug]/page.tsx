@@ -1,150 +1,39 @@
+/**
+ * Proof content loader (v1).
+ *
+ * Current source:
+ * - Obsidian-authored markdown (content/proof/*.md)
+ * - Zod-validated frontmatter
+ * - Filesystem-backed, static generation
+ *
+ * Planned evolutions (non-breaking):
+ * - MDX (for richer formatting)
+ * - Proof Chain views (computed from frontmatter)
+ * - Optional external sources (Supabase / Git mirrors)
+ * - Agent-generated logs (behind review gate)
+ *
+ * Contract:
+ * - URL stability is sacred
+ * - Frontmatter schema is the source of truth
+ * - Production only renders `status: published`
+ */
+
 // app/proof/[slug]/page.tsx
 import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-/**
- * Stubbed content loader.
- * Later replace with:
- * - MD/MDX
- * - Supabase
- * - Git-backed content
- * - Agent-generated logs
- */
-type Lane = "Retail Operator" | "Agentic Commerce Systems";
-type Tag = "Build" | "Experiment" | "Release" | "Governance";
-
-type ProofEntry = {
-  title: string;
-  date: string;
-  lane: Lane;
-  tag: Tag;
-  summary: string;
-  body: string[];
-};
-
-const PROOF_MAP: Record<string, ProofEntry> = {
-  // --- Retail Operator lane ---
-  "3pl-transition-cutover-controls": {
-    title: "3PL transition — cutover plan + controls (post-Brexit pattern)",
-    date: "2026-01-08",
-    lane: "Retail Operator",
-    tag: "Governance",
-    summary:
-      "Public-safe pattern for selecting a 3PL, defining controls, and running a cutover without service collapse.",
-    body: [
-      "Scope: multi-market fashion retail (anonymised).",
-      "Constraints: cross-border, seasonal peaks, service-level risk.",
-      "System installed:",
-      "- Selection criteria + evaluation rubric (high-level).",
-      "- SLA framework + escalation boundaries (no clauses published).",
-      "- Cutover plan + controls + exception handling cadence.",
-      "Artifacts (names only): checklist, KPI sheet, weekly exception log, comms template.",
-      "Outcome lens: service level, lead time stability, cost-to-serve, returns friction.",
-      "Note: no thresholds, rubrics, or clauses are published here.",
-    ],
-  },
-
-  "trading-cadence-install-decision-log": {
-    title: "Trading cadence install — weekly ritual + decision log",
-    date: "2026-01-08",
-    lane: "Retail Operator",
-    tag: "Build",
-    summary:
-      "Installed a weekly trading cadence that forces ownership, closes loops, and reduces leakage.",
-    body: [
-      "Objective: stop decision drift and make performance management executable.",
-      "System installed:",
-      "- Weekly trading meeting OS (agenda + owners + follow-ups).",
-      "- Decisions log + actions register.",
-      "- KPI sheet (sell-through, OOS rate, markdown control, conversion).",
-      "Artifacts (names only): agenda, KPI sheet, decisions log, owner map.",
-      "Outcome lens: faster decisions, fewer repeated discussions, tighter execution accountability.",
-    ],
-  },
-
-  "store-opening-os-readiness-pack": {
-    title: "Store opening OS — timeline + staffing + opening-week KPIs",
-    date: "2026-01-08",
-    lane: "Retail Operator",
-    tag: "Build",
-    summary:
-      "Built a repeatable opening system: readiness scoring, staffing model, and opening-week KPI pack (anonymised).",
-    body: [
-      "Objective: reduce chaos and standardise openings under time pressure.",
-      "System installed:",
-      "- Pre-open timeline + RACI (high-level).",
-      "- Staffing model + training checkpoints.",
-      "- Opening-week KPI pack + daily huddles.",
-      "Artifacts (names only): checklist, staffing model, opening-week KPIs, readiness score.",
-      "Outcome lens: launch readiness, week-1 sales ramp, NPS signal, shrink controls.",
-    ],
-  },
-
-  // --- Agentic Commerce Systems lane (your technical proof) ---
-  "skin-storefront-deploy-hygiene": {
-    title: "SKIN storefront — public deploy + hygiene pass",
-    date: "2025-12-20",
-    lane: "Agentic Commerce Systems",
-    tag: "Release",
-    summary:
-      "Initial public deployment of the SKIN storefront with environment hygiene, route discipline, and exposure minimisation.",
-    body: [
-      "Objective: deploy a public-facing commerce surface without leaking operational internals.",
-      "Actions taken:",
-      "- Separated public and server-only environment variables.",
-      "- Removed debug routes from public navigation.",
-      "- Standardised Supabase service-role handling.",
-      "Result: a clean, auditable storefront surface with reduced blast radius.",
-      "Notes: checkout remains gated upstream by Shopify configuration.",
-    ],
-  },
-
-  "supabase-key-hygiene-service-role-isolation": {
-    title: "Supabase key hygiene — service role isolation",
-    date: "2025-12-20",
-    lane: "Agentic Commerce Systems",
-    tag: "Governance",
-    summary:
-      "Isolated service-role usage to server-only contexts, standardised env naming, and removed accidental client exposure paths.",
-    body: [
-      "Objective: ensure no privileged keys can reach the client bundle.",
-      "Actions taken:",
-      "- Standardised naming: NEXT_PUBLIC_* for client-safe only; server keys kept unprefixed.",
-      "- Removed service-role access from any client-facing code paths.",
-      "- Confirmed server-only usage patterns for admin operations.",
-      "Result: reduced blast radius and clearer key governance boundaries.",
-      "Next: add automated checks (lint/CI) to prevent regressions.",
-    ],
-  },
-
-  "yoy-group-authority-scaffold": {
-    title: "YOY.Group authority scaffold",
-    date: "2025-12-21",
-    lane: "Agentic Commerce Systems",
-    tag: "Build",
-    summary:
-      "Established the initial authority surface for YOY.Group using strict layout, content, and dependency constraints.",
-    body: [
-      "Objective: create a public-facing site that signals competence without marketing.",
-      "Constraints:",
-      "- No animation.",
-      "- Minimal dependency graph.",
-      "- Editorial > conversion.",
-      "Implemented:",
-      "- Pillar-based information architecture.",
-      "- Proof-first navigation.",
-      "- shadcn/ui primitives only.",
-      "Outcome: stable authority surface suitable for slow compounding trust.",
-    ],
-  },
-};
+import {
+  loadAllProofArtifacts,
+  loadProofBySlug,
+} from "@/lib/content/proof-loader";
 
 export const dynamic = "force-static";
 
-export function generateStaticParams() {
-  return Object.keys(PROOF_MAP).map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const all = await loadAllProofArtifacts();
+  return all.map((p) => ({ slug: p.slug }));
 }
 
 type PageProps = {
@@ -155,7 +44,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const entry = PROOF_MAP[slug];
+  const entry = await loadProofBySlug(slug);
 
   if (!entry) {
     return buildMetadata({
@@ -177,15 +66,18 @@ export async function generateMetadata({
   });
 }
 
-function Body({ lines }: { lines: readonly string[] }) {
+function Body({ markdown }: { markdown: string }) {
+  const lines = markdown.split("\n");
+
   const blocks: Array<
     { type: "p"; text: string } | { type: "ul"; items: string[] }
   > = [];
 
   for (const line of lines) {
     const trimmed = line.trim();
-    const isBullet = trimmed.startsWith("- ");
+    if (!trimmed) continue;
 
+    const isBullet = trimmed.startsWith("- ");
     if (isBullet) {
       const item = trimmed.replace(/^-+\s*/, "");
       const last = blocks[blocks.length - 1];
@@ -221,21 +113,64 @@ function Body({ lines }: { lines: readonly string[] }) {
   );
 }
 
+function toIsoDate(d: unknown): string | undefined {
+  if (d instanceof Date && !Number.isNaN(d.getTime())) return d.toISOString();
+  return undefined;
+}
+
 export default async function ProofEntryPage({ params }: PageProps) {
   const { slug } = await params;
-  const entry = PROOF_MAP[slug];
+  const entry = await loadProofBySlug(slug);
   if (!entry) return notFound();
+
+  // Prefer metadataBase / SITE_URL if present; otherwise default to production domain.
+  const siteUrl =
+    process.env.SITE_URL?.replace(/\/+$/, "") || "https://yoy.group";
+  const url = `${siteUrl}/proof/${entry.slug}`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": url,
+    headline: entry.title,
+    datePublished: toIsoDate(entry.date),
+    dateModified: toIsoDate(entry.updated) || toIsoDate(entry.date),
+    author: {
+      "@type": "Organization",
+      name: "YOY.Group",
+      url: siteUrl,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "YOY.Group",
+      url: siteUrl,
+    },
+    keywords: entry.tags,
+    articleSection: entry.vertical,
+    description: entry.summary,
+    mainEntityOfPage: url,
+  };
+
+  const dateLabel =
+    entry.date instanceof Date ? entry.date.toISOString().slice(0, 10) : "";
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-24">
+      {/* JSON-LD */}
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <header className="space-y-4">
         <p className="text-xs uppercase tracking-widest text-muted-foreground">
-          Proof · {entry.lane} · {entry.tag}
+          Proof · {entry.lane} · {entry.vertical}
         </p>
 
         <h1 className="text-3xl font-semibold tracking-tight">{entry.title}</h1>
 
-        <p className="text-sm text-muted-foreground">{entry.date}</p>
+        <p className="text-sm text-muted-foreground">{dateLabel}</p>
 
         <p className="text-base leading-relaxed text-muted-foreground">
           {entry.summary}
@@ -244,7 +179,7 @@ export default async function ProofEntryPage({ params }: PageProps) {
 
       <div className="my-12 h-px bg-border" />
 
-      <Body lines={entry.body} />
+      <Body markdown={entry.body} />
 
       <div className="my-16 h-px bg-border" />
 

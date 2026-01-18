@@ -1,3 +1,15 @@
+---
+id: "2026-01-17-ia-integrity-audit"
+slug: "ia-integrity-audit"
+title: "IA Integrity Audit — 2026-01-17"
+date: "2026-01-17"
+vertical: "agentic"
+lane: "Agentic Commerce Systems"
+tags: ["ia", "audit", "sitemap", "routing", "seo", "governance"]
+status: "review"
+summary: "Information architecture integrity verification across nav, sitemap, dynamic slug registries, and internal links. Result: pass with zero broken/orphan routes."
+---
+
 # IA Integrity Audit — 2026-01-17
 
 **Audit type:** Information Architecture integrity verification
