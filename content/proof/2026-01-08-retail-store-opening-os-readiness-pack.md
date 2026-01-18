@@ -5,7 +5,9 @@ title: "Store opening OS — timeline + staffing + opening-week KPIs"
 date: "2026-01-08"
 vertical: "retail"
 lane: "Retail Operator"
-tags: ["build", "stores", "readiness", "retail-ops"]
+pillar: "retail-ops-architecture"
+service: "retail"
+tags: ["build", "store-opening", "readiness", "kpis", "retail-ops"]
 status: "published"
 summary: "Built a repeatable opening system: readiness scoring, staffing model, and opening-week KPI pack (anonymised)."
 ---

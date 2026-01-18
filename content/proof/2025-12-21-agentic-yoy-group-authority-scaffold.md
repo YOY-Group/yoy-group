@@ -5,6 +5,8 @@ title: "YOY.Group authority scaffold"
 date: "2025-12-21"
 vertical: "agentic"
 lane: "Agentic Commerce Systems"
+pillar: "agentic-commerce-os"
+service: "rails"
 tags: ["build", "information-architecture", "authority", "design-system"]
 status: "published"
 summary: "Established the initial authority surface for YOY.Group using strict layout, content, and dependency constraints."

@@ -5,7 +5,9 @@ title: "SKIN storefront — public deploy + hygiene pass"
 date: "2025-12-20"
 vertical: "agentic"
 lane: "Agentic Commerce Systems"
-tags: ["release", "deployment", "hygiene", "governance"]
+pillar: "agentic-commerce-os"
+service: "rails"
+tags: ["release", "deployment", "security-hygiene", "governance"]
 status: "published"
 summary: "Initial public deployment of the SKIN storefront with environment hygiene, route discipline, and exposure minimisation."
 ---
