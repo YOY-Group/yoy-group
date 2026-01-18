@@ -68,6 +68,10 @@ coverage/
 # =========================
 # Content Layer (INTENTIONAL)
 # =========================
-# Markdown content is staged in PR2+
-# PR1 = infra only → keep content out
-content/
+# Default: ignore all content until migrated deliberately
+/content/
+
+# PR2+: allow Proof artifacts (and ONLY proof artifacts) to be tracked
+!/content/
+!content/proof/
+!content/proof/**
