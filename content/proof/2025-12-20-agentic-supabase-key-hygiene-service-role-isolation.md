@@ -5,9 +5,11 @@ title: "Supabase key hygiene — service role isolation"
 date: "2025-12-20"
 vertical: "agentic"
 lane: "Agentic Commerce Systems"
+pillar: "agentic-commerce-os"
+service: "rails"
 tags: ["governance", "security", "supabase", "keys"]
 status: "published"
-summary: "Isolated service-role usage to server-only contexts, standardised env naming, and removed accidental client exposure paths."
+summary: "Isolated service-role usage to server-only contexts, standardised environment naming, and removed accidental client exposure paths."
 ---
 
 Objective: ensure no privileged keys can reach the client bundle.

@@ -5,6 +5,8 @@ title: "3PL transition — cutover plan + controls (post-Brexit pattern)"
 date: "2026-01-08"
 vertical: "retail"
 lane: "Retail Operator"
+pillar: "retail-ops-architecture"
+service: "retail"
 tags: ["governance", "logistics", "cutover", "retail-ops"]
 status: "published"
 summary: "Public-safe pattern for selecting a 3PL, defining controls, and running a cutover without service collapse."
