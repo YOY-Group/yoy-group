@@ -6,13 +6,14 @@ import Link from "next/link";
 export const metadata: Metadata = buildMetadata({
   title: "Andrey Voronkov",
   description:
-    "Andrey Voronkov is the founder of YOY.Group. Retail operator, agentic commerce systems builder, and culture→commerce translator — shipping-first, proof-led.",
+    "Andrey Voronkov is the founder of YOY.Group. Retail operator, commerce systems builder, and culture→commerce translator — shipping-first, proof-led.",
   path: "/andrey",
-  type: "article",
+  // Use website here; Person is expressed via JSON-LD below
+  type: "website",
   imagePath: "/og/og.png",
 });
 
-// Optional: keep these in one place so the page stays consistent + easy to audit.
+// Stable links (auditable, reusable)
 const LINKS = {
   email: "mailto:andrey@yoy.group",
   linkedin: "https://linkedin.com/in/andreyvoronkov",
@@ -25,11 +26,11 @@ const FOCUS = [
   },
   {
     k: "Agentic Commerce Systems",
-    v: "Bounded automation, decision guardrails, and auditable workflows across commerce ops.",
+    v: "Bounded automation, decision guardrails, and auditable workflows across retail and ecommerce operations.",
   },
   {
     k: "Culture → Commerce",
-    v: "Translate signal into legible product, drops, and retention loops.",
+    v: "Translate signal into legible product, drops, and retention loops that hold under scale.",
   },
 ] as const;
 
@@ -40,15 +41,15 @@ const SELECTED = [
   },
   {
     role: "General Manager (Europe) — P&L ownership",
-    note: "Growth planning + execution across D2C/wholesale; reporting to board-level stakeholders.",
+    note: "Growth planning and execution across D2C and wholesale; reporting to board-level stakeholders.",
   },
   {
-    role: "International Franchise Retail Manager — 100+ locations / multi-country portfolio",
+    role: "International Franchise Retail Manager — 100+ locations",
     note: "Partner management, standards, and operating discipline across a distributed estate.",
   },
   {
     role: "Head of Retail (UK) + European Retail Ops leadership",
-    note: "Store performance management, openings/closures, and ops execution at scale.",
+    note: "Store performance management, openings/closures, and execution at scale.",
   },
 ] as const;
 
@@ -69,8 +70,41 @@ const PRINCIPLES = [
 ] as const;
 
 export default function AndreyPage() {
+  const siteUrl =
+    process.env.SITE_URL?.replace(/\/+$/, "") || "https://yoy.group";
+
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${siteUrl}/andrey`,
+    name: "Andrey Voronkov",
+    url: `${siteUrl}/andrey`,
+    email: "andrey@yoy.group",
+    jobTitle: "Founder",
+    worksFor: {
+      "@type": "Organization",
+      name: "YOY.Group",
+      url: siteUrl,
+    },
+    sameAs: [LINKS.linkedin],
+    knowsAbout: [
+      "Retail operations",
+      "Commerce operating systems",
+      "Automation governance",
+      "Agentic systems",
+      "Merchandising and trading cadence",
+    ],
+  };
+
   return (
     <main className="mx-auto max-w-3xl px-6 py-24">
+      {/* Person JSON-LD */}
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
+
       <header className="space-y-5">
         <p className="text-xs uppercase tracking-widest text-muted-foreground">
           Profile
@@ -94,9 +128,7 @@ export default function AndreyPage() {
           >
             andrey@yoy.group
           </a>
-
           <span className="text-muted-foreground">·</span>
-
           <a
             href={LINKS.linkedin}
             target="_blank"
@@ -105,7 +137,6 @@ export default function AndreyPage() {
           >
             LinkedIn
           </a>
-
           <span className="text-muted-foreground">·</span>
           <span className="text-muted-foreground">London, UK</span>
         </div>
@@ -114,18 +145,17 @@ export default function AndreyPage() {
       <div className="my-12 h-px bg-border" />
 
       <section className="space-y-10">
-        {/* Operator background strip */}
+        {/* Background */}
         <div className="space-y-3">
           <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Background
           </h2>
 
           <p className="text-sm leading-relaxed text-muted-foreground">
-            20+ years across fashion retail operations in the UK + international
-            markets — spanning store leadership, multi-site ops, handoff points
-            between retail/wholesale, franchise portfolios, and P&amp;L
-            ownership. I package the work into systems teams can run: cadence,
-            controls, and proof.
+            20+ years across fashion retail operations in the UK and
+            international markets — spanning store leadership, multi-site ops,
+            franchise portfolios, and P&amp;L ownership. I package the work into
+            systems teams can actually run: cadence, controls, and proof.
           </p>
 
           <ul className="space-y-2 text-sm leading-relaxed text-muted-foreground">
@@ -137,7 +167,7 @@ export default function AndreyPage() {
           </ul>
         </div>
 
-        {/* Focus lanes (3) */}
+        {/* Focus */}
         <div className="space-y-3">
           <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Focus
@@ -152,7 +182,7 @@ export default function AndreyPage() {
           </ul>
         </div>
 
-        {/* Selected experience (CV-shape, no sensitive details) */}
+        {/* Experience */}
         <div className="space-y-3">
           <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Selected experience
@@ -166,7 +196,7 @@ export default function AndreyPage() {
             ))}
           </ul>
 
-          <p className="text-xs leading-relaxed text-muted-foreground">
+          <p className="text-xs text-muted-foreground">
             Full chronology lives on LinkedIn.
           </p>
         </div>
@@ -185,9 +215,9 @@ export default function AndreyPage() {
             . Anything else is noise.
           </p>
 
-          <p className="text-xs leading-relaxed text-muted-foreground">
-            Note: “agentic” here means bounded automation under explicit
-            governance — not black-box autonomy.
+          <p className="text-xs text-muted-foreground">
+            “Agentic” here means bounded automation under explicit governance —
+            not black-box autonomy.
           </p>
         </div>
 
@@ -218,24 +248,13 @@ export default function AndreyPage() {
           </p>
 
           <div className="flex flex-wrap items-center gap-4 text-sm">
-            <Link
-              href="/contact"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
+            <Link href="/contact" className="hover:text-foreground">
               Contact →
             </Link>
-
-            <Link
-              href="/services"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
+            <Link href="/services" className="hover:text-foreground">
               Services
             </Link>
-
-            <Link
-              href="/trust"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
+            <Link href="/trust" className="hover:text-foreground">
               Trust
             </Link>
           </div>

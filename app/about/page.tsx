@@ -26,11 +26,11 @@ const HOW_WE_WORK = [
 
 const WHO_ITS_FOR = [
   "Scale-locked founders with demand but fragile operations (handoffs, inventory, exceptions, decision drift).",
-  "COOs, Heads of Ops, and GMs who need a real operating cadence — clear owners, decisions, and week-to-week throughput.",
-  "Heads of Commerce, Trading, or Ecommerce running multi-channel reality who want fewer leaks and cleaner execution loops.",
-  "Systems and Data leads tasked with automation and AI adoption who need governance: logging, auditability, and rollback paths.",
-  "Creator-led brands where the audience is strong but operations are improvised — merch, drops, and fulfilment that must hold under pressure.",
-  "Intrapreneurs inside larger organisations shipping commerce pilots who need systems that move faster than procurement cycles.",
+  "COOs, Heads of Ops, and GMs who need a real operating cadence — clear owners, decisions, week-to-week throughput.",
+  "Retail and Ecommerce leaders running multi-channel reality who want fewer leaks and cleaner execution loops.",
+  "Systems and Data leads driving automation/AI adoption who need governance: logging, auditability, rollback paths.",
+  "Creator-led brands and teams where the audience is strong but ops are improvised — merch, drops, and fulfilment that must hold under pressure.",
+  "Intrapreneurs shipping commerce pilots inside larger organisations who need systems that move faster than procurement cycles.",
 ] as const;
 
 const PROOF_ARTIFACTS = [
