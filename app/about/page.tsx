@@ -8,7 +8,7 @@ export const metadata: Metadata = buildMetadata({
   description:
     "YOY.Group is a London-based operator studio that designs and installs operating systems for commerce: systems, cadence, proof.",
   path: "/about",
-  type: "article",
+  type: "website",
   imagePath: "/og/og.png",
 });
 
@@ -25,9 +25,12 @@ const HOW_WE_WORK = [
 ] as const;
 
 const WHO_ITS_FOR = [
-  "Founders scaling commerce without losing control (delivery, data, decisions)",
-  "COOs / Heads of Ops / Heads of Commerce who want less noise and more throughput",
-  "Systems leads owning integrations, automation, and operational reliability",
+  "Scale-locked founders with demand but fragile operations (handoffs, inventory, exceptions, decision drift).",
+  "COOs, Heads of Ops, and GMs who need a real operating cadence — clear owners, decisions, and week-to-week throughput.",
+  "Heads of Commerce, Trading, or Ecommerce running multi-channel reality who want fewer leaks and cleaner execution loops.",
+  "Systems and Data leads tasked with automation and AI adoption who need governance: logging, auditability, and rollback paths.",
+  "Creator-led brands where the audience is strong but operations are improvised — merch, drops, and fulfilment that must hold under pressure.",
+  "Intrapreneurs inside larger organisations shipping commerce pilots who need systems that move faster than procurement cycles.",
 ] as const;
 
 const PROOF_ARTIFACTS = [
