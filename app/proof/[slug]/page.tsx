@@ -18,7 +18,6 @@
  * - Production only renders `status: published`
  */
 
-// app/proof/[slug]/page.tsx
 import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -122,7 +121,7 @@ function Body({ markdown }: { markdown: string }) {
           return (
             <ul
               key={idx}
-              className="list-disc pl-5 text-sm text-foreground space-y-1"
+              className="list-disc space-y-1 pl-5 text-sm text-foreground"
             >
               {b.items.map((it) => (
                 <li key={it} className="leading-relaxed">
@@ -138,7 +137,7 @@ function Body({ markdown }: { markdown: string }) {
         return (
           <div key={idx} className={hasLabel ? "pt-2" : ""}>
             {hasLabel && (
-              <span className="block text-[10px] uppercase tracking-wider text-muted-foreground/60 mb-1">
+              <span className="mb-1 block text-[10px] uppercase tracking-wider text-muted-foreground/60">
                 {b.sectionLabel}
               </span>
             )}
@@ -153,6 +152,60 @@ function Body({ markdown }: { markdown: string }) {
 function toIsoDate(d: unknown): string | undefined {
   if (d instanceof Date && !Number.isNaN(d.getTime())) return d.toISOString();
   return undefined;
+}
+
+function toDateLabel(d: unknown): string {
+  return d instanceof Date && !Number.isNaN(d.getTime())
+    ? d.toISOString().slice(0, 10)
+    : "";
+}
+
+/**
+ * Public display rule (match /proof hub):
+ * - Always show Lane
+ * - Prefer Service
+ * - Show Vertical only if it adds info (not equal to Service)
+ * - Pillar is taxonomy; keep it muted
+ */
+function ContextStrip({
+  lane,
+  service,
+  vertical,
+  pillar,
+}: {
+  lane: string;
+  service?: string;
+  vertical?: string;
+  pillar?: string;
+}) {
+  const showVertical = Boolean(vertical) && vertical !== service;
+
+  return (
+    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+      <span>{lane}</span>
+
+      {service && (
+        <>
+          <span className="text-border">·</span>
+          <span>{service}</span>
+        </>
+      )}
+
+      {showVertical && (
+        <>
+          <span className="text-border">·</span>
+          <span>{vertical}</span>
+        </>
+      )}
+
+      {pillar && (
+        <>
+          <span className="text-border">·</span>
+          <span className="text-muted-foreground/70">{pillar}</span>
+        </>
+      )}
+    </div>
+  );
 }
 
 export default async function ProofEntryPage({ params }: PageProps) {
@@ -188,8 +241,7 @@ export default async function ProofEntryPage({ params }: PageProps) {
     mainEntityOfPage: url,
   };
 
-  const dateLabel =
-    entry.date instanceof Date ? entry.date.toISOString().slice(0, 10) : "";
+  const dateLabel = toDateLabel(entry.date);
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-24">
@@ -207,20 +259,13 @@ export default async function ProofEntryPage({ params }: PageProps) {
 
         <h1 className="text-3xl font-semibold tracking-tight">{entry.title}</h1>
 
-        {/* Context strip */}
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
-          <span>{entry.lane}</span>
-          <span className="text-border">·</span>
-          <span>{entry.vertical}</span>
-          {(entry.pillar || entry.service) && (
-            <>
-              <span className="text-border">·</span>
-              <span className="text-muted-foreground/70">
-                {[entry.pillar, entry.service].filter(Boolean).join(" / ")}
-              </span>
-            </>
-          )}
-        </div>
+        {/* Context strip (dedup + aligned with hub) */}
+        <ContextStrip
+          lane={entry.lane}
+          service={entry.service}
+          vertical={entry.vertical}
+          pillar={entry.pillar}
+        />
 
         <p className="text-sm text-muted-foreground">{dateLabel}</p>
 

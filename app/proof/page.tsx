@@ -12,15 +12,15 @@
  * - Production only renders `status: published` (enforced by loader)
  *
  * Planned evolutions (non-breaking):
- * - Filter/sort UI via searchParams (vertical/tag/status)
+ * - Filter/sort UI via searchParams (service/tag/lane)
  * - Proof Chain hub views (chain + chain_position)
  * - MDX rendering (richer formatting) + safer markdown rendering
  * - JSON-LD ItemList schema for the hub
  */
 
 import { loadAllProofArtifacts } from "@/lib/content/proof-loader";
-import { buildMetadata } from "@/lib/seo";
 import type { ProofArtifact } from "@/lib/schema/proof";
+import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ExpandableTags } from "./ExpandableTags";
@@ -62,7 +62,7 @@ function MetadataRow({
   return (
     <div className="flex flex-wrap items-center gap-1.5">
       {label && (
-        <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60 mr-1">
+        <span className="mr-1 text-[10px] uppercase tracking-wider text-muted-foreground/60">
           {label}
         </span>
       )}
@@ -71,23 +71,36 @@ function MetadataRow({
   );
 }
 
+function toDateLabel(d: unknown): string {
+  return d instanceof Date && !Number.isNaN(d.getTime())
+    ? d.toISOString().slice(0, 10)
+    : "";
+}
+
+/**
+ * Public display rule:
+ * - Always show Lane (delivery posture)
+ * - Prefer Service (commercial entry point)
+ * - Show Vertical only if it adds information (i.e., not redundant with Service)
+ * - Pillar is useful, but keep it muted (taxonomy, not sales copy)
+ */
 function ProofCard({ p }: { p: ProofArtifact }) {
-  const hasPillarOrService = p.pillar || p.service;
+  const showVertical = Boolean(p.vertical) && p.vertical !== p.service;
 
   return (
     <article className="rounded-2xl border border-border p-5 shadow-sm">
       <div className="flex flex-col gap-3">
-        {/* Row 1: Lane + Vertical */}
+        {/* Row 1: Lane + Service + (Vertical if non-redundant) */}
         <MetadataRow>
           <Pill>{p.lane}</Pill>
-          <Pill>{p.vertical}</Pill>
+          {p.service && <Pill>{p.service}</Pill>}
+          {showVertical && <Pill>{p.vertical}</Pill>}
         </MetadataRow>
 
-        {/* Row 2: Pillar + Service (only if present) */}
-        {hasPillarOrService && (
+        {/* Row 2: Pillar (muted) */}
+        {p.pillar && (
           <MetadataRow>
-            {p.pillar && <Pill variant="muted">{p.pillar}</Pill>}
-            {p.service && <Pill variant="muted">{p.service}</Pill>}
+            <Pill variant="muted">{p.pillar}</Pill>
           </MetadataRow>
         )}
 
@@ -109,26 +122,42 @@ function ProofCard({ p }: { p: ProofArtifact }) {
   );
 }
 
-function toDateLabel(d: unknown): string {
-  return d instanceof Date && !Number.isNaN(d.getTime())
-    ? d.toISOString().slice(0, 10)
-    : "";
-}
-
 export default async function ProofHubPage() {
   const proofs = await loadAllProofArtifacts();
 
+  const siteUrl =
+    process.env.SITE_URL?.replace(/\/+$/, "") || "https://yoy.group";
+
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListOrder: "Descending",
+    itemListElement: proofs.map((p, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      url: `${siteUrl}/proof/${p.slug}`,
+      name: p.title,
+    })),
+  };
+
   return (
     <main className="mx-auto max-w-4xl px-6 py-24">
+      {/* JSON-LD: ItemList for Proof hub */}
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
+
       <header className="space-y-4">
-        <p className="text-xs uppercase tracking-widest text-muted-foreground">
-          Proof
-        </p>
+        {/* Removed redundant small "Proof" label above H1 */}
         <h1 className="text-3xl font-semibold tracking-tight">Proof</h1>
+
         <p className="text-base leading-relaxed text-muted-foreground">
           Execution evidence: build logs, experiments, and operational
           artifacts. No claims without trace.
         </p>
+
         <p className="text-sm text-muted-foreground/80">
           Each entry below documents real work — decisions made, systems built,
           lessons captured.

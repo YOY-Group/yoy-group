@@ -29,7 +29,10 @@ export default function TrustPage() {
         </p>
 
         <div className="flex flex-wrap items-center gap-3 pt-2 text-xs text-muted-foreground">
-          <Link href="/proof" className="hover:text-foreground transition-colors">
+          <Link
+            href="/proof"
+            className="hover:text-foreground transition-colors"
+          >
             Proof →
           </Link>
           <span>·</span>
@@ -55,6 +58,7 @@ export default function TrustPage() {
           <li>Security posture (high-level, intentionally non-sensitive)</li>
           <li>Privacy + terms</li>
           <li>Contact + response expectations</li>
+          <li>Entity + contracting disclosure</li>
         </ul>
       </section>
 
@@ -62,7 +66,9 @@ export default function TrustPage() {
 
       <section className="space-y-6" aria-label="Contact and disclosure">
         <div className="space-y-2">
-          <h2 className="text-sm font-medium tracking-tight">Contact & response</h2>
+          <h2 className="text-sm font-medium tracking-tight">
+            Contact & response
+          </h2>
 
           <p className="text-sm leading-relaxed text-muted-foreground">
             Primary contact is{" "}
@@ -72,7 +78,7 @@ export default function TrustPage() {
             >
               hello@yoy.group
             </a>
-            . Typical response time is 2–3 business days.
+            . We usually reply within 2–3 business days.
           </p>
 
           <p className="text-sm leading-relaxed text-muted-foreground">
@@ -91,14 +97,30 @@ export default function TrustPage() {
           <h2 className="text-sm font-medium tracking-tight">Disclosure</h2>
 
           <p className="text-sm leading-relaxed text-muted-foreground">
-            This site may include operational notes and proofs. Sensitive details
-            stay private by design. If something can’t be shared safely, it won’t
-            be published.
+            This site may include operational notes and proofs. Sensitive
+            details stay private by design. If something can’t be shared safely,
+            it won’t be published.
           </p>
 
           <p className="text-sm leading-relaxed text-muted-foreground">
             Where possible, we link claims to artifacts. If a claim cannot be
             traced, it should be treated as non-shipped.
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          <h2 className="text-sm font-medium tracking-tight">
+            Entity & contracting
+          </h2>
+
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            YOY.Group is a trading name. Client work is delivered through{" "}
+            <span className="font-medium text-foreground">YOY.AI Studio</span>.
+            Contracting and invoicing are handled by{" "}
+            <span className="font-medium text-foreground">
+              Years On Years Ltd (UK)
+            </span>
+            .
           </p>
         </div>
       </section>

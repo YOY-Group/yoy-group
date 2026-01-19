@@ -16,13 +16,33 @@ export const ProofPillarSchema = z.enum([
 
 export const ProofServiceSchema = z.enum(["retail", "creators", "rails"]);
 
+/**
+ * Vertical taxonomy (WHO context for a Proof artifact):
+ * - Prefer plural "creators" (matches Services)
+ * - Accept legacy "creator" and normalize → "creators"
+ *
+ * Include "rails" here only if you plan Proof artifacts that are rail-facing.
+ * If you prefer to keep "rails" out of Proof vertical for now, remove it from the enum.
+ */
+export const ProofVerticalSchema = z.preprocess(
+  (v) => {
+    if (typeof v !== "string") return v;
+    if (v === "creator") return "creators";
+    return v;
+  },
+  z.enum(["retail", "agentic", "creators", "rails"]),
+);
+
 export const ProofFrontmatterSchema = z
   .object({
     id: z.string().regex(/^\d{4}-\d{2}-\d{2}-[a-z]+-[a-z0-9-]+$/),
     title: z.string().min(10).max(140),
     date: z.coerce.date(),
     updated: z.coerce.date().optional(),
-    vertical: z.enum(["retail", "agentic", "creator"]),
+
+    // Vertical audience context (normalized)
+    vertical: ProofVerticalSchema,
+
     tags: z.array(z.string()).min(1).max(12),
     status: z.enum(["draft", "review", "published"]),
     lane: z.string().min(2).max(80),
