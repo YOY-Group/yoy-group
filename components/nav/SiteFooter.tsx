@@ -112,14 +112,28 @@ export default function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-border/60 pt-6">
-          <p className="text-xs text-muted-foreground">
-            © {year} YOY.Group. Proof required.
-          </p>
+        {/* Bottom bar */}
+        <div className="mt-12 border-t border-border/60 pt-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs text-muted-foreground">
+              © {year} YOY.Group. Proof required.
+            </p>
 
-          <a href="mailto:hello@yoy.group" className={LINK_CLASS}>
-            hello@yoy.group
-          </a>
+            <p className="text-[10px] leading-relaxed text-muted-foreground/80 sm:flex-1 sm:text-center sm:leading-snug">
+              YOY.Group is a trading name of{" "}
+              <span className="font-medium text-muted-foreground">
+                Years On Years Ltd
+              </span>{" "}
+              (UK), London. <br />
+              <span className="whitespace-nowrap">
+                Not affiliated with any similarly named entities.
+              </span>
+            </p>
+
+            <a href="mailto:hello@yoy.group" className={LINK_CLASS}>
+              hello@yoy.group
+            </a>
+          </div>
         </div>
       </div>
     </footer>

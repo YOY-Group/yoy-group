@@ -1,12 +1,12 @@
 // app/pillars/agentic-commerce-os/page.tsx
+import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "Agentic Commerce OS",
   description:
-    "A commerce operating system where execution, coordination, and decision-making are handled by autonomous agents under explicit governance.",
+    "A commerce operating system where execution, coordination, and decision-making are handled by governed agents operating within explicit permissions, review points, and rollback paths.",
   path: "/pillars/agentic-commerce-os",
   type: "article",
   twitterCard: "summary_large_image",
@@ -23,8 +23,8 @@ export default function AgenticCommerceOSPage() {
 
         <p className="text-base leading-relaxed text-muted-foreground">
           A commerce operating system where execution, coordination, and
-          decision-making are handled by autonomous agents under explicit
-          governance.
+          decision-making are handled by governed agents operating within
+          explicit permissions, review points, and rollback paths.
         </p>
       </header>
 
@@ -37,10 +37,10 @@ export default function AgenticCommerceOSPage() {
         </h2>
 
         <p className="text-sm leading-relaxed">
-          Agentic Commerce OS is the layer that runs the store. It replaces
-          manual workflows and brittle dashboards with autonomous systems that
-          observe state, make decisions, execute actions, and log outcomes —
-          continuously.
+          Agentic Commerce OS is the execution layer behind the store. It
+          transforms workflows into governed automations that observe state,
+          operate within permissions, log outcomes, and escalate when thresholds
+          are crossed.
         </p>
 
         <p className="text-sm leading-relaxed text-muted-foreground">
@@ -60,13 +60,14 @@ export default function AgenticCommerceOSPage() {
 
         <ul className="space-y-3 text-sm">
           <li>
-            <span className="font-medium">Agents</span> — autonomous workers
+            <span className="font-medium">Agents</span> — governed workers
             responsible for discrete domains (orders, inventory, content,
-            support).
+            support), with clear permissions, escalation paths, and logging.
           </li>
           <li>
-            <span className="font-medium">Rails</span> — execution pathways
-            connecting systems (commerce, payments, data, messaging).
+            <span className="font-medium">Rails</span> — standardised
+            integration pathways connecting commerce, payments, and data
+            systems.
           </li>
           <li>
             <span className="font-medium">Memory</span> — structured state,
@@ -74,7 +75,7 @@ export default function AgenticCommerceOSPage() {
           </li>
           <li>
             <span className="font-medium">Governance</span> — explicit rules,
-            permissions, and escalation paths.
+            ownership, and review/rollback thresholds.
           </li>
         </ul>
       </section>
@@ -91,6 +92,10 @@ export default function AgenticCommerceOSPage() {
           <li>• Replacing human judgment where context is required</li>
           <li>• Opaque black-box automation</li>
           <li>• Tool sprawl disguised as “AI transformation”</li>
+          <li>
+            • Fully autonomous operation without human oversight or rollback
+            paths
+          </li>
         </ul>
       </section>
 

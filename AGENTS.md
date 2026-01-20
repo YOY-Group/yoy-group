@@ -23,6 +23,8 @@ hard_rules:
   - prefer deletion over invention
   - NO page may exceed one primary purpose
   - preview deployments MUST be noindex; production MUST be index unless explicitly set to stealth
+  - PR base must be release; never target main
+  - never merge to main; human-only production gate
 
 soft_rules:
   - minimal pages > dense pages

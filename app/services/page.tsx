@@ -103,12 +103,12 @@ const LENSES: readonly Lens[] = [
 
 const MODULES: readonly Module[] = [
   {
-    title: "Cadence",
+    title: "Operational Cadence",
     desc: "Weekly rhythm, decision points, and responsibility mapping. The machine runs when the schedule is real.",
   },
   {
-    title: "Buying & Merchandising",
-    desc: "Range, pricing, intake, and inventory signals. Less guesswork, fewer leaks.",
+    title: "Supply & Inventory",
+    desc: "Assortment, pricing inputs, intake, and inventory signals. Less guesswork, fewer leaks.",
   },
   {
     title: "Retention",
@@ -120,7 +120,7 @@ const MODULES: readonly Module[] = [
   },
   {
     title: "Rails",
-    desc: "Identity, access, provenance, and automation boundaries. Web2-first, Web3-optional.",
+    desc: "Identity, access, provenance, and automation boundaries. Predictable execution under load.",
   },
 ] as const;
 
@@ -138,7 +138,7 @@ const MODES: readonly Mode[] = [
     title: "Build Sprint",
     desc: "Timeboxed implementation of a small number of high-leverage changes.",
     includes: [
-      "One or two modules shipped (e.g. Cadence + Proof)",
+      "One or two modules shipped (e.g. Operational Cadence + Proof)",
       "Guardrails and failure-mode handling",
       "Handoff notes and operating discipline",
     ],
@@ -174,9 +174,10 @@ export default function ServicesPage() {
         </p>
 
         <p className="mt-3 text-xs text-muted-foreground">
-          Services delivered by{" "}
-          <span className="font-medium text-foreground">YOY.AI Studio</span> — a
-          division of YOY.Group.
+          Services delivered through{" "}
+          <span className="font-medium text-foreground">YOY.AI Studio</span> —
+          the client-facing consulting practice of{" "}
+          <span className="font-medium text-foreground">YOY.Group</span>.
         </p>
 
         <div className="flex flex-wrap items-center gap-3 pt-2">

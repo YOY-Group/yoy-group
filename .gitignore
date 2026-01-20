@@ -1,37 +1,77 @@
+# =========================
 # Dependencies
+# =========================
 node_modules/
 
-# Next.js
+# =========================
+# Next.js build artifacts
+# =========================
 .next/
 out/
 
-# Environment
+# =========================
+# Environment variables
+# =========================
 .env
 .env.local
 .env.*.local
 
+# =========================
 # Logs
+# =========================
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+*.log
 
-# OS / Editor
+# =========================
+# OS / Editor noise
+# =========================
 .DS_Store
 Thumbs.db
 
+# =========================
 # Vercel
+# =========================
 .vercel
 
+# =========================
 # TypeScript
+# =========================
 *.tsbuildinfo
 
-# Testing / Coverage (future-safe)
+# =========================
+# Testing / Coverage
+# =========================
 coverage/
 
-# Misc
-*.log
+# =========================
+# Package manager overrides
+# =========================
+# Keep repo-level .npmrc tracked
+# Ignore only per-machine overrides
+.npmrc.local
 
-.npmrc
+# =========================
+# Internal / Ops / Tooling
+# =========================
 .ops/
-.vscode/extentions.json
+
+# =========================
+# VS Code (explicit allowlist)
+# =========================
+# Keep workspace settings if intentional
+# Ignore extensions recommendations (machine-specific)
+.vscode/extensions.json
+
+# =========================
+# Content Layer (INTENTIONAL)
+# =========================
+# Default: ignore all content until migrated deliberately
+/content/
+
+# PR2+: allow Proof artifacts (and ONLY proof artifacts) to be tracked
+!/content/
+!content/proof/
+!content/proof/**

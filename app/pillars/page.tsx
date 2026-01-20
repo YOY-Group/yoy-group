@@ -18,7 +18,7 @@ const PILLARS = [
   {
     title: "Agentic Commerce OS",
     href: "/pillars/agentic-commerce-os",
-    desc: "Autonomous systems for commerce execution and decision-making.",
+    desc: "Governed systems for commerce execution and decision-making.",
   },
   {
     title: "Retail Operations Architecture",
@@ -36,10 +36,6 @@ export default function PillarsPage() {
   return (
     <main className="mx-auto max-w-4xl px-6 py-24">
       <header className="space-y-4">
-        <p className="text-xs uppercase tracking-widest text-muted-foreground">
-          Pillars
-        </p>
-
         <h1 className="text-3xl font-semibold tracking-tight">Pillars</h1>
 
         <p className="text-base leading-relaxed text-muted-foreground">

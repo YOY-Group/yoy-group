@@ -10,11 +10,21 @@ This repo is an authority library and proof surface. It is not a marketing site.
 
 ## Non-negotiables (Session Protocol)
 
-- Work on a new git branch (never `main`).
+- Work on a new git branch (never `main` or `release` directly).
+- PR base branch must be `release`. Never target `main`.
+- Never merge to `main`. Human-only production gate.
 - Propose a plan before editing files.
 - Keep scope to one PR ≤ 60 minutes unless explicitly approved.
 - Prefer deletion over invention. If uncertain: remove.
 - No secrets: never read or modify `.env*`, keys, tokens, credentials.
+
+## Branch governance
+
+- **Default branch:** `release` (all PRs target here)
+- **Production branch:** `main` (Vercel production deploys from here)
+- **Preview branch:** `release` (Vercel preview deploys from here)
+- **Protected:** `main` requires PR + approval + status check (`Vercel Preview Comments`)
+- **Human-only:** Only humans merge `release` → `main`
 
 ## Release gate (required before PR is “Done”)
 

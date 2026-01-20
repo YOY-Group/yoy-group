@@ -15,7 +15,7 @@ const PILLARS = [
   {
     title: "Agentic Commerce OS",
     href: "/pillars/agentic-commerce-os",
-    desc: "Autonomous systems for commerce execution and decision-making.",
+    desc: "Governed systems for commerce execution and decision-making.",
   },
   {
     title: "Retail Operations Architecture",
@@ -45,6 +45,10 @@ export default function Page() {
             <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
               We improve how companies sell, ship, and grow — using systems, not
               slides.
+              <br />
+              <span className="text-sm text-muted-foreground">
+                Three lenses: Retail, Creators, Rails.
+              </span>
             </p>
           </div>
 
