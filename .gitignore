@@ -75,3 +75,20 @@ coverage/
 !/content/
 !content/proof/
 !content/proof/**
+
+# Friday Victory Lap inbox (sanitized drop zone; keep folder, ignore contents)
+content/_inbox/friday/*
+!content/_inbox/friday/.gitkeep
+
+# Allow Log / Playbooks / Glossary when ready
+!content/log/
+!content/log/**
+
+!content/glossary/
+!content/glossary/**
+
+!content/playbooks/
+!content/playbooks/**
+
+# Local QA artifacts (screenshots, PDFs)
+artifacts/
