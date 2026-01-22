@@ -1,6 +1,7 @@
 // app/andrey/page.tsx
 import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = buildMetadata({
@@ -8,9 +9,10 @@ export const metadata: Metadata = buildMetadata({
   description:
     "Andrey Voronkov is the founder of YOY.Group. Retail operator, commerce systems builder, and culture→commerce translator — shipping-first, proof-led.",
   path: "/andrey",
-  // Use website here; Person is expressed via JSON-LD below
-  type: "website",
-  imagePath: "/og/og.png",
+  // Person page: express as profile for OG, Person via JSON-LD below
+  type: "profile",
+  // Use the canonical headshot as the OG image for this profile page
+  imagePath: "/og/andrey.jpg",
 });
 
 // Stable links (auditable, reusable)
@@ -54,10 +56,13 @@ const SELECTED = [
 ] as const;
 
 const CREDENTIALS = [
-  { k: "Executive MBA", v: "Fashion (University of the Arts London)." },
+  {
+    k: "Executive MBA (Fashion)",
+    v: "Fashion Business School, London College of Fashion (University of the Arts London).",
+  },
   {
     k: "PG Cert",
-    v: "Fashion Buying & Merchandising (London College of Fashion, UAL).",
+    v: "Fashion Buying & Merchandising (London College of Fashion, University of the Arts London).",
   },
   { k: "Chartered Manager", v: "Strategic Management & Leadership (CMI)." },
   { k: "Languages", v: "English, French, Russian." },
@@ -73,19 +78,48 @@ export default function AndreyPage() {
   const siteUrl =
     process.env.SITE_URL?.replace(/\/+$/, "") || "https://yoy.group";
 
+  // Canonical identity image (stable, versioned)
+  const imageUrl = `${siteUrl}/og/andrey.jpg`;
+
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
-    "@id": `${siteUrl}/andrey`,
+    // Use fragment id (common pattern) to distinguish entity from document
+    "@id": `${siteUrl}/andrey#person`,
     name: "Andrey Voronkov",
     url: `${siteUrl}/andrey`,
-    email: "andrey@yoy.group",
+    image: imageUrl,
+    email: "mailto:andrey@yoy.group",
     jobTitle: "Founder",
     worksFor: {
       "@type": "Organization",
       name: "YOY.Group",
       url: siteUrl,
     },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "London",
+      addressCountry: "GB",
+    },
+    knowsLanguage: ["en", "fr", "ru"],
+    alumniOf: [
+      {
+        "@type": "CollegeOrUniversity",
+        name: "University of the Arts London",
+        sameAs: "https://www.arts.ac.uk/",
+      },
+      {
+        "@type": "CollegeOrUniversity",
+        name: "London College of Fashion",
+        sameAs: "https://www.arts.ac.uk/colleges/london-college-of-fashion",
+      },
+      {
+        "@type": "EducationalOrganization",
+        name: "Fashion Business School (London College of Fashion)",
+        sameAs:
+          "https://www.arts.ac.uk/colleges/london-college-of-fashion/courses/fashion-business-school",
+      },
+    ],
     sameAs: [LINKS.linkedin],
     knowsAbout: [
       "Retail operations",
@@ -105,40 +139,56 @@ export default function AndreyPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
 
-      <header className="space-y-5">
+      <header className="space-y-6">
         <p className="text-xs uppercase tracking-widest text-muted-foreground">
           Profile
         </p>
 
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Andrey Voronkov
-        </h1>
+        {/* Identity header: photo + name */}
+        <div className="flex items-start gap-5">
+          <div className="relative h-20 w-20 overflow-hidden rounded-full ring-1 ring-border">
+            <Image
+              src="/og/andrey.jpg"
+              alt="Andrey Voronkov"
+              fill
+              sizes="64px"
+              className="object-cover"
+              priority
+            />
+          </div>
 
-        <p className="text-base leading-relaxed text-muted-foreground">
-          Founder at <span className="text-foreground">YOY.Group</span>. I build
-          operating systems for modern commerce — from trading cadence and store
-          execution to automation, data, and customer loops. UK-based. Shipping
-          first.
-        </p>
+          <div className="min-w-0 space-y-3">
+            <h1 className="text-3xl font-semibold tracking-tight">
+              Andrey Voronkov
+            </h1>
 
-        <div className="flex flex-wrap items-center gap-4 text-sm">
-          <a
-            href={LINKS.email}
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            andrey@yoy.group
-          </a>
-          <span className="text-muted-foreground">·</span>
-          <a
-            href={LINKS.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            LinkedIn
-          </a>
-          <span className="text-muted-foreground">·</span>
-          <span className="text-muted-foreground">London, UK</span>
+            <p className="text-base leading-relaxed text-muted-foreground">
+              Founder at <span className="text-foreground">YOY.Group</span>. I
+              build operating systems for modern commerce — from trading cadence
+              and store execution to automation, data, and customer loops.
+              UK-based. Shipping first.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4 text-sm">
+              <a
+                href={LINKS.email}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                andrey@yoy.group
+              </a>
+              <span className="text-muted-foreground">·</span>
+              <a
+                href={LINKS.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                LinkedIn
+              </a>
+              <span className="text-muted-foreground">·</span>
+              <span className="text-muted-foreground">London, UK</span>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -234,6 +284,19 @@ export default function AndreyPage() {
               </li>
             ))}
           </ul>
+        </div>
+
+        {/* FAQ / Disambiguation */}
+        <div className="space-y-3">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+            FAQ
+          </h2>
+
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            This page refers to Andrey Voronkov, founder of YOY.Group (UK). Not
+            affiliated with the computer scientist Andrei Voronkov (University
+            of Manchester) or athletes with the same name.
+          </p>
         </div>
 
         {/* Start */}

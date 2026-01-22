@@ -30,8 +30,34 @@ const PILLARS = [
 ] as const;
 
 export default function Page() {
+  const siteUrl =
+    process.env.SITE_URL?.replace(/\/+$/, "") || "https://yoy.group";
+
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${siteUrl}#org`,
+    name: "YOY.Group",
+    url: siteUrl,
+    logo: `${siteUrl}/brand/y-glyph-white.svg`,
+    email: "mailto:hello@yoy.group",
+    founder: {
+      "@type": "Person",
+      "@id": `${siteUrl}/andrey#person`,
+      name: "Andrey Voronkov",
+      url: `${siteUrl}/andrey`,
+    },
+  };
+
   return (
     <main className="mx-auto max-w-4xl px-6 py-20">
+      {/* Organization JSON-LD */}
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+      />
+
       {/* Hero */}
       <header className="space-y-6">
         <div className="max-w-3xl space-y-6">
