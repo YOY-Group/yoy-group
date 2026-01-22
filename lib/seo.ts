@@ -21,7 +21,7 @@ type SeoInput = {
   follow?: boolean;
 
   /** OpenGraph type */
-  type?: "website" | "article";
+  type?: "website" | "article" | "profile";
 
   /** Twitter card type */
   twitterCard?: "summary" | "summary_large_image";
