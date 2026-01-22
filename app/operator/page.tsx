@@ -137,8 +137,40 @@ const ENGAGEMENTS: readonly Mode[] = [
 ] as const;
 
 export default function OperatorPage() {
+  const siteUrl =
+    process.env.SITE_URL?.replace(/\/+$/, "") || "https://yoy.group";
+
+  // Article JSON-LD: binds this method page to your canonical Person entity
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${siteUrl}/operator#article`,
+    headline: "Executive Operator",
+    description:
+      "How Andrey works: diagnose → align → design → ship → compound. Calm authority, hands-on throughput, proof-led delivery.",
+    mainEntityOfPage: `${siteUrl}/operator`,
+    author: {
+      "@type": "Person",
+      "@id": `${siteUrl}/andrey#person`,
+      name: "Andrey Voronkov",
+      url: `${siteUrl}/andrey`,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "YOY.Group",
+      url: siteUrl,
+    },
+  };
+
   return (
     <main className="mx-auto max-w-3xl px-6 py-24">
+      {/* Article JSON-LD */}
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+
       {/* Header */}
       <header className="space-y-5">
         <p className="text-xs uppercase tracking-widest text-muted-foreground">
