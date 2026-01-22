@@ -92,3 +92,4 @@ content/_inbox/friday/*
 
 # Local QA artifacts (screenshots, PDFs)
 artifacts/
+!content/proof/**
