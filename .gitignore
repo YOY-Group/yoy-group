@@ -61,52 +61,37 @@ coverage/
 # =========================
 # VS Code (explicit allowlist)
 # =========================
-# Keep workspace settings if intentional
-# Ignore extensions recommendations (machine-specific)
 .vscode/extensions.json
 
 # =========================
 # Content Layer (INTENTIONAL)
 # =========================
-# Default: ignore all content until migrated deliberately
+# Default: ignore all content
 /content/
 
-# PR2+: allow Proof artifacts (and ONLY proof artifacts) to be tracked
-!/content/
+# ---- Public, governed content ----
+!content/
 !content/proof/
 !content/proof/**
 
-# Friday Victory Lap inbox (sanitized drop zone; keep folder, ignore contents)
-content/_inbox/friday/*
-!content/_inbox/friday/.gitkeep
-
-# Allow Log / Playbooks / Glossary when ready
 !content/log/
 !content/log/**
-
-!content/glossary/
-!content/glossary/**
 
 !content/playbooks/
 !content/playbooks/**
 
-# Local QA artifacts (screenshots, PDFs)
-artifacts/
-
-# Friday Victory Lap inbox (sanitized drop zone; keep folder, ignore contents)
-content/_inbox/friday/*
-!content/_inbox/friday/.gitkeep
-
-# Allow Log / Playbooks / Glossary when ready
-!content/log/
-!content/log/**
-
 !content/glossary/
 !content/glossary/**
 
-!content/playbooks/
-!content/playbooks/**
+# ---- Schema / contracts (PUBLIC) ----
+!content/_schema/
+!content/_schema/**
 
-# Local QA artifacts (screenshots, PDFs)
+# ---- Friday Victory Lap inbox (local-only) ----
+content/_inbox/friday/*
+!content/_inbox/friday/.gitkeep
+
+# =========================
+# Local QA artifacts
+# =========================
 artifacts/
-!content/proof/**
