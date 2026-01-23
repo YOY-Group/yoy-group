@@ -2,51 +2,67 @@
 import { getSiteUrl } from "@/lib/site";
 import type { MetadataRoute } from "next";
 
-// Legacy sources remain until PR3-B/C migrates them too
+// Legacy sources remain until migrated
 import { GLOSSARY_TERMS, LOG_ISSUES, PLAYBOOK_SLUGS } from "@/lib/content";
 
-// NEW: proof source of truth (markdown)
+// Proof source of truth (markdown)
 import { loadAllProofArtifacts } from "@/lib/content/proof-loader";
 
 /**
  * Sitemap is an Authority Layer artifact:
  * - Single canonical base URL
  * - Dynamic slugs must match the *actual* content source of truth
- * - No duplicated arrays inside this file
- *
- * Current state (PR3-A):
- * - Proof routes come from markdown (content/proof/*.md)
- * - Others remain on legacy arrays until migrated
+ * - Stable lastModified (avoid "everything changed" on every deploy)
+ * - Only public, real routes (no drafts, no internal)
  */
 
 const SITE_URL = getSiteUrl().replace(/\/$/, "");
 
-function u(p: string) {
-  return `${SITE_URL}${p.startsWith("/") ? p : `/${p}`}`;
+function u(path: string) {
+  return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
-type ChangeFreq = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
 type RouteItem = MetadataRoute.Sitemap[number];
+type ChangeFreq = NonNullable<RouteItem["changeFrequency"]>;
 
 function route(
   path: string,
-  now: Date,
+  lastModified: Date,
   changeFrequency: ChangeFreq,
   priority: RouteItem["priority"],
 ): RouteItem {
-  return { url: u(path), lastModified: now, changeFrequency, priority };
+  return { url: u(path), lastModified, changeFrequency, priority };
 }
+
+function coerceDate(v: unknown): Date | null {
+  if (!v) return null;
+  const d = v instanceof Date ? v : new Date(String(v));
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function uniqueRoutes(items: RouteItem[]): RouteItem[] {
+  const map = new Map<string, RouteItem>();
+  for (const item of items) map.set(item.url, item);
+  return Array.from(map.values());
+}
+
+type ProofMeta = {
+  updatedAt?: unknown;
+  updated?: unknown;
+  date?: unknown;
+  publishedAt?: unknown;
+};
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  const routes: MetadataRoute.Sitemap = [
+  const routes: RouteItem[] = [
     // ── Core authority surfaces ───────────────────────────────
     route("/", now, "weekly", 1.0),
 
     route("/pillars", now, "monthly", 0.9),
     route("/log", now, "weekly", 0.9),
-    route("/proof", now, "weekly", 0.8),
+    route("/proof", now, "weekly", 0.9),
     route("/playbooks", now, "weekly", 0.8),
     route("/glossary", now, "weekly", 0.8),
     route("/services", now, "monthly", 0.7),
@@ -71,11 +87,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     route("/trust/editorial", now, "yearly", 0.4),
     route("/trust/press", now, "yearly", 0.4),
 
-    // ── Founder / identity (exists now) ───────────────────────
-    route("/andrey", now, "monthly", 0.5),
+    // ── Founder / identity ────────────────────────────────────
+    route("/andrey", now, "monthly", 0.8),
 
-    // ── Operating model (exists now) ──────────────────────────
-    route("/operator", now, "yearly", 0.6),
+    // ── Operating model ───────────────────────────────────────
+    route("/operator", now, "yearly", 0.8),
 
     // ── Legal / secondary ─────────────────────────────────────
     route("/about", now, "yearly", 0.4),
@@ -89,10 +105,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     routes.push(route(`/log/${issue}`, now, "monthly", 0.7));
   }
 
-  // ✅ Proof slugs now come from markdown (source of truth)
+  // ✅ Proof slugs from markdown (source of truth)
+  // Use stable lastModified when available to avoid "full churn" sitemaps.
   const proofs = await loadAllProofArtifacts();
+
   for (const p of proofs) {
-    routes.push(route(`/proof/${p.slug}`, now, "monthly", 0.6));
+    const meta = p as unknown as ProofMeta;
+
+    const lm =
+      coerceDate(meta.updatedAt) ??
+      coerceDate(meta.updated) ??
+      coerceDate(meta.date) ??
+      coerceDate(meta.publishedAt) ??
+      now;
+
+    routes.push(route(`/proof/${p.slug}`, lm, "monthly", 0.6));
   }
 
   for (const slug of PLAYBOOK_SLUGS) {
@@ -103,5 +130,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     routes.push(route(`/glossary/${term}`, now, "monthly", 0.5));
   }
 
-  return routes;
+  // Ensure no accidental duplicates (defensive hygiene)
+  return uniqueRoutes(routes);
 }
