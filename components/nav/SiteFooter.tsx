@@ -119,7 +119,11 @@ export default function SiteFooter() {
               © {year} YOY.Group. Proof required.
             </p>
 
-            <p className="text-[10px] leading-relaxed text-muted-foreground/80 sm:flex-1 sm:text-center sm:leading-snug">
+            {/* Prevent Google from using this repeated legal boilerplate as the snippet */}
+            <p
+              className="text-[10px] leading-relaxed text-muted-foreground/80 sm:flex-1 sm:text-center sm:leading-snug"
+              data-nosnippet
+            >
               YOY.Group is a trading name of{" "}
               <span className="font-medium text-muted-foreground">
                 Years On Years Ltd
