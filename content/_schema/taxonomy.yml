@@ -1,0 +1,120 @@
+# content/_schema/taxonomy.yml
+version: "0.1"
+status: "active"
+owner: "Andrey"
+last_updated: "2026-01-23"
+
+# ─────────────────────────────────────────────
+# Frontmatter Contract (Public Content)
+# ─────────────────────────────────────────────
+frontmatter_contract:
+  required_fields:
+    - id
+    - slug
+    - title
+    - date
+    - lane
+    - pillar
+    - service
+    - tags
+    - status
+    - summary
+
+  optional_fields:
+    - origin
+    - property
+    - chain
+    - chain_position
+    - updatedAt
+    - publishedAt
+
+  status_allowed:
+    - draft
+    - review
+    - published
+
+  status_prod_visible:
+    - published
+
+# ─────────────────────────────────────────────
+# Pillars (Narrative / Authority Axes)
+# These are stable and long-lived
+# ─────────────────────────────────────────────
+pillars:
+  allowed:
+    - slug: "agentic-commerce-os"
+      label: "Agentic Commerce OS"
+
+    - slug: "retail-ops-architecture"
+      label: "Retail Ops Architecture"
+
+    - slug: "culture-commerce-engineering"
+      label: "Culture→Commerce Engineering"
+
+# ─────────────────────────────────────────────
+# Services (Commercial Domains You Sell)
+# Public-facing, B2B-safe abstraction
+# ─────────────────────────────────────────────
+services:
+  allowed:
+    - slug: "retail"
+      label: "Retail"
+
+    - slug: "rails"
+      label: "Rails"
+
+    - slug: "creators"
+      label: "Creators"
+
+# ─────────────────────────────────────────────
+# Lanes (Operator Perspective / Voice)
+# Keeps tone consistent without vertical sprawl
+# ─────────────────────────────────────────────
+lanes:
+  allowed:
+    - "Retail Operator"
+    - "Agentic Commerce Systems"
+
+# ─────────────────────────────────────────────
+# Origin (Optional Disambiguation)
+# Prevents leaking internal vs client work
+# ─────────────────────────────────────────────
+origin:
+  allowed:
+    - "internal" # YOY.SKIN / YOY.Group internal installs
+    - "client" # anonymised client installs
+    - "rnd" # research / prototype work (public-safe)
+
+# ─────────────────────────────────────────────
+# Tag Policy (Search + LLM Retrieval)
+# Two-layer logic without SEO spam
+# ─────────────────────────────────────────────
+tag_policy:
+  rules:
+    - "tags must be lowercase"
+    - "kebab-case only"
+    - "prefer 3–8 tags per entry"
+    - "must include at least one canonical tag"
+
+  canonical_required_one_of:
+    - build
+    - release
+    - governance
+    - experiment
+    - research
+
+  domain_recommended:
+    - retail-ops
+    - rails
+    - creators
+
+  discovery_allowed: [] # expanded deliberately over time
+
+# ─────────────────────────────────────────────
+# Guardrails
+# ─────────────────────────────────────────────
+constraints:
+  - "no new pillar without schema update"
+  - "no new service without commercial intent"
+  - "no discovery tag unless work genuinely supports it"
+  - "taxonomy changes require human approval"
